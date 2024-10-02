@@ -1,0 +1,20 @@
+.title_2 .title_2_Button {
+  position: relative;
+}
+
+.text_position {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
+}
+
+.mmm{
+    
+    background-image: url("./assets/All_img/long-banner.jpg");
+    /* text-transform: capitalize; */
+    width:calc(100vh - 55px);
+    /* width: fit-content; */
+   
+}
+
