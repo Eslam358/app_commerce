@@ -1,13 +1,19 @@
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
+
 
 const Titile1 = () => {
   const theme = useTheme();
+  const matches_sm = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <>
       <Container maxWidth="xl" sx={{ my: 3, py: 3 }}>
         <Stack
-          direction={"row-reverse"}
+          direction={`${matches_sm?"column-reverse":"row-reverse"}`}
+          // direction={"column-reverse"}
           justifyContent={"center"}
           alignItems={"center"}
           sx={{ my: 3, py: 3 }}
@@ -19,7 +25,7 @@ const Titile1 = () => {
               justifyContent: "flex-end",
               alignItems: "center",
               py: 2,
-              width: "75%",
+              width:`${matches_sm?"100%":"75%"} `,
               borderRight: "20px",
               borderRadius: "55px 0px 0px 5px",
               position: "relative",
@@ -37,19 +43,8 @@ const Titile1 = () => {
                 top: "-25px",
                 left: "-7px",
                 transform: "rotateZ(31deg)",
-              },
-              //   "&::before": {
-              //     content: '""',
-              //     position: "absolute",
-              //     width: "3px",
-              //     height: "85px",
-              //     backgroundColor: "black",
-
-              //     top: "-3px",
-              //     right: "-4px",
-
-              //     zIndex: "2",
-              //   },
+              }
+         
             }}
             component="div"
           >
@@ -63,10 +58,10 @@ const Titile1 = () => {
             >
               <Button
                 sx={{
-                  px: "20px",
+                  px: `${matches_sm?"0":"20px"} `,
 
-                  mx: "19px",
-                  my: "5px",
+                  mx:`${matches_sm?"5px":"20px"} `,
+                  my: `${matches_sm?"0":"5px"} `,
 
                   fontWeight: "bold",
                   transition: "0.5s",
@@ -83,9 +78,9 @@ const Titile1 = () => {
           <Typography
             variant="h4"
             sx={{
-              // bgcolor: "#f7f7f8",
+           
               py: 3,
-              width: "25%",
+              width: `${matches_sm?"90%":"25%"} `,
               position: "relative",
               fontWeight: "bold",
               zIndex: "1",

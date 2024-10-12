@@ -8,6 +8,7 @@ import { useTheme } from "@mui/material/styles";
 
 const SelectedProducts = () => {
   const theme = useTheme();
+
   const [alignment, setAlignment] = useState("?category=6439d2d167d9aa4ca970649f");
   const [products, setProducts] = useState([]);
 
@@ -31,6 +32,8 @@ const SelectedProducts = () => {
         // التعامل مع الأخطاء
         // setError(error);
         // setLoading(false);
+        console.log(error);
+        
       });
   };
 
@@ -85,11 +88,15 @@ const SelectedProducts = () => {
               //   aria-label="Platform"
 
               sx={{
+                display:"flex",
+                flexWrap:"wrap",
+                // gap:"10px",
                 ".MuiButtonBase-root": {
                   border: "1px solid #aaa",
                   width: "120px",
+                  height:"75px",
                   py: "10px",
-                  mx: 1,
+                  m: 1,
                   fontWeight: "bold",
                   fontSize: "24",
                   transition: "0.5s",
@@ -105,6 +112,7 @@ const SelectedProducts = () => {
                 },
               }}
               size="large"
+             
             >
               <ToggleButton value="?category=6439d2d167d9aa4ca970649f">New Arrivals</ToggleButton>
               <ToggleButton value="?sort=-price">Best Seller</ToggleButton>

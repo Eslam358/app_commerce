@@ -60,7 +60,7 @@ const MainSwiper = ({ Arr, num }) => {
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const matches_md = useMediaQuery(theme.breakpoints.up("md"));
   const matches_lg = useMediaQuery(theme.breakpoints.up("lg"));
-  num = matches_lg ? num : matches_md ? 3 : 2;
+  num = matches_lg ? num : matches_md ? 3 : matches?2:1;
 
   const [open, setOpen] = useState(false);
   const [loading_item, setloading_item] = useState("");

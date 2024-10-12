@@ -20,6 +20,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import "./header_1.scss";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import List from "@mui/material/List";
 import ListItemText from "@mui/material/ListItemText";
@@ -31,6 +32,9 @@ const options = ["A", "B"];
 const Header1 = () => {
   const colorMode = useContext(ColorModeContext);
   const theme = useTheme();
+  // const matches_sm = useMediaQuery(theme.breakpoints.down("sm"));
+  const matches_xs400 =  useMediaQuery('(max-width:400px)');
+
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -54,7 +58,9 @@ const Header1 = () => {
     <Box className="header_1" sx={{ pt:"54px"}}>
       <Box
         sx={{
-          p: "3px 15px",
+          px: "15px",
+          py: `${matches_xs400? "5px":"0"}`,
+         
           bgcolor: "#2b3445",
           position: "fixed",
           top: "0",
@@ -68,24 +74,25 @@ const Header1 = () => {
           justifyContent="space-between"
           alignItems="center"
         >
-          <Typography
-            // @ts-ignore
-            variant="div"
-            component="span"
-            direction="row"
+          <Stack
+        
+           
+            direction={matches_xs400? "column":"row"}
             justifyContent="space-between"
-            alignItems="center"
-            spacing={2}
+            // justifyContent={matches_xs400? "start":"space-between"}
+            alignItems={matches_xs400? "start":"center"}
+            gap={1}
           >
             <Typography
-              marginRight={1}
-              component="span"
+             
+              // component="h1"
+              // variant="h6"
               sx={{
                 borderRadius: "20px",
-                p: "3px 9px",
+                p: "1px 9px",
                 fontSize: 14,
                 fontWeight: "bold",
-                width: "23px",
+             
                 color: "white",
                 backgroundColor: "#d23f57",
                 "&:hover": { color: "#d23f57", backgroundColor: "white" },
@@ -94,13 +101,13 @@ const Header1 = () => {
               HOT
             </Typography>
             <Typography
-              // @ts-ignore
-              variant="span"
+            //  p={matches_xs400? "15px":"0px"}
+              //  component={matches_xs400? "span":"p"}
               sx={{ fontSize: "11px", color: "white" }}
             >
               Free Express Shipping
             </Typography>
-          </Typography>
+          </Stack>
           <Box
             sx={{
               display: "flex",

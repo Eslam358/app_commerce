@@ -16,8 +16,10 @@ const WomensFashion = () => {
       <Container maxWidth="xl">
         <Stack
           direction={"row"}
+          flexWrap={"wrap"}
           justifyContent={"space-between"}
           color="#fff"
+          gap={2}
           py={7}
           sx={{ li: { color: "#909090", p: "4px", fontSize: "14px"} }}
         >

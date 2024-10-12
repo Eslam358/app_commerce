@@ -11,16 +11,22 @@ import "swiper/css/scrollbar";
 import { Box, Container,  } from "@mui/material";
 import Catog from "./Catog";
 import Typeproudct from "./Typeproudct";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+
 
 const Hero = () => {
+  const theme = useTheme();
+  const matches_sm = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Container maxWidth="xl">
       {/* <Stack justifyContent={"space-between"} direction={"row"}> */}
-      <Box sx={{ display: "flex", pt:3 }}>
+      <Box sx={{ display: `${matches_sm?"block":"flex"}`, pt:3 }}>
         <Box
           sx={{
             // float:"left",
-            width: "75%",
+            width: `${matches_sm?"100%":"75%"}`,
 
             ".swiper-pagination": { marginBottom: "5px" },
             ".swiper-pagination-bullet": {
@@ -92,7 +98,7 @@ const Hero = () => {
 
         <Box
           sx={{
-            width: "25%",
+            width: `${matches_sm?"100%":"25%"}`,
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-around",

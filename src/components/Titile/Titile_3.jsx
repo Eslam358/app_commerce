@@ -1,6 +1,12 @@
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import "./titile.css";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
 const Titel3 = () => {
+  const theme = useTheme();
+  const matches_sm = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <>
       <Stack
@@ -14,10 +20,10 @@ const Titel3 = () => {
           flexWrap: { xs: "wrap", md: "wrap", lg: "nowrap" },
         }}
       >
-        <Box sx={{ minWidth: "300px", width: "100%", position: "relative" }}>
+        <Box sx={{ minWidth: "30px", width: "100%", position: "relative" }}>
           <img
             src="./assets/All_img/banner-21.jpg"
-            style={{ width: " 100%" }}
+            style={{ width:`${matches_sm?" 120%":" 100%"}  `}}
             alt=""
           />
           <div className=" text_position">
@@ -48,7 +54,7 @@ const Titel3 = () => {
         <Box sx={{ minWidth: "300px", width: "100%", position: "relative" }}>
           <img
             src="./assets/All_img/banner-22.jpg"
-            style={{ width: " 100%" }}
+            style={{ width:`${matches_sm?" 120%":" 100%"}  `}}
             alt=""
           />
           <div className=" text_position">

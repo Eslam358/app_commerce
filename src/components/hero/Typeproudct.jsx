@@ -3,9 +3,13 @@ import CardMedia from "@mui/material/CardMedia";
 import { Button, CardActionArea, CardActions, Stack } from "@mui/material";
 import { useTheme } from "@mui/material";
 import { useSelector } from "react-redux";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
 const Typeproudct = () => {
   const theme = useTheme()
+  const matches_xs400 =  useMediaQuery('(max-width:400px)');
 
+  // @ts-ignore
   const Categories = useSelector((dat) => dat.Categories);
 
   return (
@@ -23,10 +27,10 @@ const Typeproudct = () => {
             // className="fex"
             color="#fff"
             sx={{
-              width: "200px",
+              width: `${!matches_xs400? "200px": "100%"}`,
 
-              height: "200px",
-              pb: "1px",
+              // height:`${!matches_sm? "200px": "400px"}`,
+              py: "2px",
               "&:hover .MuiCardMedia-img": { scale: "1.01" },
 
               "&:hover .MuiButtonBase-root.MuiButton-root": {
