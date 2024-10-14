@@ -152,7 +152,7 @@ export default function Signin() {
             Password
           </InputLabel>
           <OutlinedInput
-            required
+           required={checked?false: true}
             sx={{ mb: 2 }}
             placeholder="******"
             size="small"
