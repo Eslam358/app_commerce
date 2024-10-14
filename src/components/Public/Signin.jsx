@@ -18,6 +18,7 @@ import {
 } from "../../reduxtoolkit/slice/Snackbars";
 
 import {
+  Box,
   CircularProgress,
   IconButton,
   InputAdornment,
@@ -27,8 +28,29 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
+import Switch from "@mui/material/Switch";
+import { alpha, styled } from "@mui/material/styles";
+import { pink } from "@mui/material/colors";
+import FormControlLabel from "@mui/material/FormControlLabel";
+
+const PinkSwitch = styled(Switch)(({ theme }) => ({
+  "& .MuiSwitch-switchBase.Mui-checked": {
+    color: pink[600],
+    "&:hover": {
+      backgroundColor: alpha(pink[600], theme.palette.action.hoverOpacity),
+    },
+  },
+  "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+    backgroundColor: pink[600],
+  },
+}));
 
 export default function Signin() {
+  const [checked, setChecked] = useState(false);
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
   // @ts-ignore
   const open_sign_in = useSelector((dat) => dat.Sign_in);
   const sign_in_Fun = useDispatch();
@@ -39,6 +61,12 @@ export default function Signin() {
 
   const handleSignup = async (data) => {
     // جلب البيانات باستخدام axios
+
+    data = checked
+      ? { email: "eslam900aa@gmail.com", password: "eslam@123" }
+      : data;
+    console.log(checked);
+
     axios
 
       .post("https://ecommerce.routemisr.com/api/v1/auth/signin", data)
@@ -97,18 +125,20 @@ export default function Signin() {
             const formData = new FormData(event.currentTarget);
             // @ts-ignore
             const formJson = Object.fromEntries(formData.entries());
+
             await handleSignup(formJson);
           },
         }}
       >
         <DialogTitle>Sign in</DialogTitle>
+
         <DialogContent>
           <InputLabel required htmlFor="email">
             Email
           </InputLabel>
           <TextField
             autoFocus
-            required
+            required={checked?false: true}
             sx={{ mb: 2 }}
             size="small"
             id="email"
@@ -118,7 +148,7 @@ export default function Signin() {
             fullWidth
           />
 
-          <InputLabel required htmlFor="password">
+          <InputLabel required={checked?false: true} htmlFor="password">
             Password
           </InputLabel>
           <OutlinedInput
@@ -159,8 +189,24 @@ export default function Signin() {
               Register
             </Button>{" "}
           </Typography>
+          <Box sx={{ ".MuiTypography-root": { fontSize: "12px" } }}>
+            {" "}
+            <FormControlLabel
+              control={
+                <PinkSwitch
+                  size="small"
+                  onChange={handleChange}
+                  checked={checked}
+                  inputProps={{ "aria-label": "controlled" }}
+                  defaultChecked
+                />
+              }
+              label="Use Default Account"
+            />
+          </Box>
         </DialogContent>
-        <DialogActions>
+
+        <DialogActions sx={{ pt: "0" }}>
           <Button onClick={() => sign_in_Fun(handleClose_Signin())}>
             Cancel
           </Button>
