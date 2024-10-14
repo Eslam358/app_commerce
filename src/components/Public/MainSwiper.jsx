@@ -5,7 +5,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
-import { Box, IconButton, Rating, Stack } from "@mui/material";
+import { Box, IconButton, Rating } from "@mui/material";
 import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
 import Badge from "@mui/material/Badge";
 
@@ -31,10 +31,13 @@ import { wishlist } from "../../reduxtoolkit/slice/Wishlist/Wishlist";
 import { wishlist_list } from "../../reduxtoolkit/slice/Wishlist/Wishlist_list";
 import { cart_add_item } from "../../reduxtoolkit/slice/Cart/Add_Item";
 import { cart_items } from "../../reduxtoolkit/slice/Cart/Items_Cart";
-import { Link, useNavigate  } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
+
+import { Open_Dialog_test } from "../../reduxtoolkit/slice/Dialog_test_sigin";
 
 // eslint-disable-next-line react/prop-types
-const MainSwiper = ({ Arr, num }) => {
+function MainSwiper({ Arr, num }) {
+  const Data_Person = useSelector((dat) => dat.Data_Person);
   // @ts-ignore
   const Cart_list = useSelector((dat) => dat.cart_items);
   // @ts-ignore
@@ -60,7 +63,7 @@ const MainSwiper = ({ Arr, num }) => {
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const matches_md = useMediaQuery(theme.breakpoints.up("md"));
   const matches_lg = useMediaQuery(theme.breakpoints.up("lg"));
-  num = matches_lg ? num : matches_md ? 3 : matches?2:1;
+  num = matches_lg ? num : matches_md ? 3 : matches ? 2 : 1;
 
   const [open, setOpen] = useState(false);
   const [loading_item, setloading_item] = useState("");
@@ -73,11 +76,9 @@ const MainSwiper = ({ Arr, num }) => {
   return (
     <>
       <Box
-       
         sx={{
           overflow: "hidden",
           position: "relative",
-         
 
           ".swiper-button-prev": { transition: "0.3s" },
           "&:hover .swiper-button-prev": {
@@ -101,10 +102,10 @@ const MainSwiper = ({ Arr, num }) => {
             <SwiperSlide key={item._id}>
               <Card
                 onClick={() => {
-                  navigate(`/Item/${item.title}`, { state: { item:item } })
+                  navigate(`/Item/${item.title}`, { state: { item: item } });
                 }}
                 sx={{
-                  cursor:"pointer",
+                  cursor: "pointer",
                   py: 1,
                   px: 2,
                   position: "relative",
@@ -146,7 +147,7 @@ const MainSwiper = ({ Arr, num }) => {
                   }}
                   image={item.imageCover}
                 />
-                  
+
                 <CardContent sx={{ textAlign: "start" }}>
                   <Typography
                     variant="body1"
@@ -167,7 +168,7 @@ const MainSwiper = ({ Arr, num }) => {
                   </Typography>
                   <Box>
                     <Rating
-                    readOnly
+                      readOnly
                       name="size-small"
                       defaultValue={item.ratingsAverage}
                       sx={{ fontSize: "15px" }}
@@ -204,6 +205,12 @@ const MainSwiper = ({ Arr, num }) => {
                   <Button
                     onClick={(e) => {
                       e.stopPropagation();
+                     
+                      if (Data_Person.message !== "success") {
+                        Redux_fun(Open_Dialog_test())
+                     
+                        return;
+                      }
                       add_item(item.id);
                       setloading_item(item.id);
                     }}
@@ -211,7 +218,7 @@ const MainSwiper = ({ Arr, num }) => {
                       width: "90%",
 
                       mx: "auto",
-                      color:   theme.palette.text.primary,
+                      color: theme.palette.text.primary,
                       fontWeight: "bold",
                       transition: "0.5s",
                       border: "1px solid #777",
@@ -251,6 +258,11 @@ const MainSwiper = ({ Arr, num }) => {
                   size="small"
                   onClick={(e) => {
                     e.stopPropagation();
+                    if (!Cookies_person) {
+                      Redux_fun(Open_Dialog_test())
+                   
+                      return;
+                    }
                     Wishlist__({
                       id: item.id,
                       remove: Wishlist_list_data.data?.find(
@@ -273,9 +285,10 @@ const MainSwiper = ({ Arr, num }) => {
           ))}
         </Swiper>
         <ResponsiveDialog setOpen={setOpen} open={open} item={item} />
+
       </Box>
     </>
   );
-};
+}
 
 export default MainSwiper;

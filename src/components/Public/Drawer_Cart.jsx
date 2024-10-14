@@ -24,6 +24,7 @@ export default function Cart_Drawer({ toggleDrawer, Drawer_open }) {
   const fun_redux = useDispatch();
   // @ts-ignore
   const cart_list = useSelector((dat) => dat.cart_items);
+
   // @ts-ignore
   const Data_Cart = useSelector((dat) => dat.Remove_cart_item);
   console.log("oooooooooooooooooo",Data_Cart)

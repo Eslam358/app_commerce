@@ -8,30 +8,31 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { Box, Container,  } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import Catog from "./Catog";
 import Typeproudct from "./Typeproudct";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-
+import ButtonShop from "../Public/Button_shop";
 
 const Hero = () => {
   const theme = useTheme();
   const matches_sm = useMediaQuery(theme.breakpoints.down("sm"));
+  const matches_lg = useMediaQuery(theme.breakpoints.down("lg"));
 
   return (
     <Container maxWidth="xl">
       {/* <Stack justifyContent={"space-between"} direction={"row"}> */}
-      <Box sx={{ display: `${matches_sm?"block":"flex"}`, pt:3 }}>
+      <Box sx={{ display: `${matches_lg ? "block" : "flex"}`, pt: 3 }}>
         <Box
           sx={{
             // float:"left",
-            width: `${matches_sm?"100%":"75%"}`,
+            width: `${matches_lg ? "100%" : "75%"}`,
 
             ".swiper-pagination": { marginBottom: "5px" },
             ".swiper-pagination-bullet": {
-              width: "15px",
-              height: "15px",
+              width: {sm:"15px",xs:"10px"},
+              height: {sm:"15px",xs:"10px"},
               border: "2px solid #FFF",
               outline: `2px solid ${grey[600]}`,
               bgcolor: "#FFF",
@@ -48,49 +49,50 @@ const Hero = () => {
             modules={[Navigation, Pagination, Scrollbar, A11y]}
             spaceBetween={5}
             slidesPerView={1}
-            //   navigation
             pagination={{ clickable: true }}
-            //   scrollbar={{ draggable: true }}
-            // onSwiper={(swiper) => console.log(swiper)}
-            // onSlideChange={() => console.log("slide change")}
           >
             <SwiperSlide>
-              <Box
-                sx={
-                  {
-                    // margin: "2px auto -50px",
-                    // // width:"100%",
-                    // height:"200px",
-                    // width:"200px"
-                    // height:"60vh",
-                  }
-                }
-              >
+              <Box sx={{ position: "relative" }}>
                 <img
                   src="./assets/imgss/banner-15.jpg"
                   alt=""
                   style={{ width: "100%", height: "100%" }}
                 />
+                  <Box className=" text_position">
+              <Typography mb={1} color={"#666"} fontSize={"16px"}>
+                NEW ARRIVALS
+              </Typography>
+              <Typography fontSize={"24px"} color="#222">
+                SKI CLOTHES SALE{" "}
+              </Typography>
+              <Typography lineHeight={"11px"} color={"error"}>
+                Up to 35% Off{" "}
+              </Typography>
+              <ButtonShop bg_color={"#222"} />
+            </Box>
               </Box>
             </SwiperSlide>
             <SwiperSlide>
               <Box
-                sx={
-                  {
-                    // margin: "2px auto -50px",
-                    // // width:"100%",
-                    // height:"200px",
-                    // width:"200px"
-                    // height:"60vh",
-                  }
-                }
+           sx={{ position: "relative" }}
               >
-                {/* <img src="./assets/imgss/banner-15.jpg" alt="" style={{width:"100%", height:"100%"}} />  */}
                 <img
                   src="./assets/imgss/banner-25.jpg"
                   alt=""
                   style={{ width: "100%", height: "100%" }}
                 />
+  <Box className=" text_position">
+              <Typography mb={2} color={"#666"} fontSize={"16px"}>
+                NEW ARRIVALS
+              </Typography>
+              <Typography fontSize={"25px"} color="#222">
+                SKI CLOTHES SALE{" "}
+              </Typography>
+              <Typography lineHeight={"6px"} color={"error"}>
+                Up to 35% Off{" "}
+              </Typography>
+              <ButtonShop bg_color={"#222"} />
+            </Box>
               </Box>
             </SwiperSlide>
           </Swiper>
@@ -98,27 +100,56 @@ const Hero = () => {
 
         <Box
           sx={{
-            width: `${matches_sm?"100%":"25%"}`,
+            width: { lg:"25%",md:"100%"},
             display: "flex",
-            flexDirection: "column",
+            gap:1,
+            flexDirection: { lg:"column",md:"row",sm:"row", xs:"column"},
             justifyContent: "space-around",
             alignContent: "flex-start",
           }}
         >
-          <img
-            style={{ width: "100%", margin: "5px 0 0 5px" }}
-            src="./assets/imgss/banner-16.jpg"
-            alt=""
-          />
-          <img
-            style={{ width: "100%", margin: "5px 0 0 5px" }}
-            src="./assets/imgss/banner-17.jpg"
-            alt=""
-          />
+          <Box flexGrow={1} sx={{ position: "relative" }}>
+            <img
+              style={{ width: "100%", margin: "5px 0 0 5px" }}
+              src="./assets/imgss/banner-16.jpg"
+              alt=""
+            />
+            <Box  className=" text_position">
+              <Typography mb={2} color={"#666"} fontSize={"12px"}>
+                NEW ARRIVALS
+              </Typography>
+              <Typography fontSize={"18px"} color="#222">
+                SKI CLOTHES SALE{" "}
+              </Typography>
+              <Typography lineHeight={"6px"} color={"error"}>
+                Up to 35% Off{" "}
+              </Typography>
+              <ButtonShop bg_color={"#222"} />
+            </Box>
+          </Box>
+          <Box flexGrow={1} sx={{ position: "relative" }}>
+            <img
+              style={{ width: "100%", margin: "5px 0 0 5px" }}
+              src="./assets/imgss/banner-17.jpg"
+              alt=""
+            />
+            <Box className=" text_position">
+              <Typography mb={2} color={"#666"} fontSize={"12px"}>
+                NEW ARRIVALS
+              </Typography>
+              <Typography fontSize={"18px"} color="#222">
+                SKI CLOTHES SALE{" "}
+              </Typography>
+              <Typography lineHeight={"6px"} color={"error"}>
+                Up to 35% Off{" "}
+              </Typography>
+              <ButtonShop bg_color={"#222"} />
+            </Box>
+          </Box>
         </Box>
       </Box>
-      <Catog/>
-      <Typeproudct/>
+      <Catog />
+      <Typeproudct />
     </Container>
   );
 };

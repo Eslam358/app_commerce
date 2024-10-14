@@ -38,12 +38,15 @@ import { useState } from "react";
 
 import { cart_add_item } from "../../reduxtoolkit/slice/Cart/Add_Item";
 import { cart_items } from "../../reduxtoolkit/slice/Cart/Items_Cart";
-
+import { Open_Dialog_test } from "../../reduxtoolkit/slice/Dialog_test_sigin";
 
 export default function ResponsiveDialog({ setOpen, open, item }) {
   const theme = useTheme();
+  const Data_Person = useSelector((dat) => dat.Data_Person);
   const cart_list = useSelector((dat) => dat.cart_items);
-  const cart_product =cart_list.data.products?.find(a => a.product.id === item.id );
+  const cart_product = cart_list.data.products?.find(
+    (a) => a.product.id === item.id
+  );
 
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -51,12 +54,11 @@ export default function ResponsiveDialog({ setOpen, open, item }) {
     setOpen(false);
   };
 
-  
   // @ts-ignore
   const Wishlist_list_data = useSelector((dat) => dat.Wishlist_list);
   const Redux_fun = useDispatch();
   const [loading, setLoading] = useState(false);
-  
+
   const Update_quantity = (id, count) => {
     Redux_fun(cart_Update_quantity({ id, count }));
   };
@@ -223,74 +225,75 @@ export default function ResponsiveDialog({ setOpen, open, item }) {
                   </IconButton>
                 </CardContent>
                 <CardActions>
+                  {cart_product ? (
+                    <Stack
+                      direction={"row"}
+                      gap={3}
+                      alignItems={"center"}
+                      sx={{ fontSize: "18px", fontWeight: "bold" }}
+                    >
+                      <IconButton
+                        sx={{
+                          border: `1px solid ${theme.palette.red_main.main} `,
+                          //  fontSize: "14px",
+                        }}
+                        onClick={() => {
+                          let count = cart_product?.count + 1;
+                          Update_quantity(cart_product.product.id, count);
+                        }}
+                        //  size="small"
+                        aria-label="close"
+                      >
+                        <AddIcon fontSize="inherit" />
+                      </IconButton>
+                      <p>{cart_product.count}</p>
+                      <IconButton
+                        //  disabled={cart_product?.count === 1}
+                        onClick={() => {
+                          let count = cart_product.count - 1;
+                          Update_quantity(cart_product.product.id, count);
+                        }}
+                        //  size="small"
+                        aria-label="close"
+                        sx={{
+                          border: `1px solid ${theme.palette.red_main.main} `,
+                          //  fontSize: "14px",
+                        }}
+                      >
+                        <HorizontalRuleIcon fontSize="inherit" />
+                      </IconButton>
+                    </Stack>
+                  ) : (
+                    <Button
+                      onClick={() => {
+                        if (Data_Person.message !== "success") {
+                          Redux_fun(Open_Dialog_test());
 
+                          return;
+                        }
+                        add_item(item.id);
+                      }}
+                      sx={{
+                        width: "90%",
+                        py: 1,
+                        mx: "auto",
+                        color: theme.palette.text.primary,
+                        fontWeight: "bold",
+                        transition: "0.5s",
+                        border: "1px solid #777",
+                        textTransform: "capitalize",
+                        fontSize: "18px",
 
-
-{cart_product?
-     <Stack direction={"row"} gap={3} alignItems={"center"}  sx={{ fontSize: "18px", fontWeight:"bold" }}>
-     <IconButton
-       sx={{
-         border: `1px solid ${theme.palette.red_main.main} `,
-        //  fontSize: "14px",
-       }}
-       onClick={()=>{
-         let count = cart_product?.count + 1
-         Update_quantity(cart_product.product.id ,count)
-       }}
-      //  size="small"
-       aria-label="close"
-     >
-       <AddIcon fontSize="inherit" />
-     </IconButton>
-     <p>{cart_product.count}</p>
-     <IconButton
-    //  disabled={cart_product?.count === 1}
-          onClick={()=>{
-           let count = cart_product.count - 1
-           Update_quantity(cart_product.product.id ,count)
-         }}
-      //  size="small"
-       aria-label="close"
-       sx={{
-         border: `1px solid ${theme.palette.red_main.main} `,
-        //  fontSize: "14px",
-       }}
-     >
-       <HorizontalRuleIcon fontSize="inherit" />
-     </IconButton>
-   </Stack>
-
-  : 
-  <Button
-  onClick={() => add_item(item.id)}
-  sx={{
-    width: "90%",
-    py: 1,
-    mx: "auto",
-    color: "#222",
-    fontWeight: "bold",
-    transition: "0.5s",
-    border: "1px solid #777",
-    textTransform: "capitalize",
-    fontSize: "18px",
-
-    "&:hover": {
-      bgcolor: "#1f2937",
-      color: "white",
-    },
-  }}
-  size="large"
->
-  Add to Cart
-</Button>
-  
-  }
-
-             
-
-
-
-               
+                        "&:hover": {
+                          bgcolor: "#1f2937",
+                          color: "white",
+                        },
+                      }}
+                      size="large"
+                    >
+                      Add to Cart
+                    </Button>
+                  )}
                 </CardActions>
 
                 <IconButton

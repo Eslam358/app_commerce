@@ -47,7 +47,7 @@
   height: 40px;
   animation: name duration timing-function delay iteration-count direction
     fill-mode;
-  animation: sss infinite 20s 5s linear;
+  animation: sss infinite 10s 1s linear;
   overflow: hidden;
 }
 .Swiper-one .swiper-button-prev,
@@ -94,11 +94,11 @@
 @keyframes sss {
   0% {
     /* width: 0%; */
-    transform: translateX(182%);
+    transform: translateX(102%);
   }
 
   100% {
-    transform: translateX(-182%);
+    transform: translateX(-102%);
   }
 }
 

@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import {Sign_in, Sign_up} from "../slice/DialogSign";
 import Data_Person from "../slice/Data_Person";
+import test_singIn from "../slice/Dialog_test_sigin";
 import Snackbars from "../slice/Snackbars";
 import Wishlist from "../slice/Wishlist/Wishlist";
 import Wishlist_list from "../slice/Wishlist/Wishlist_list";
@@ -17,6 +18,7 @@ const store = configureStore({
   reducer: {
     Sign_in,
     Sign_up,
+    test_singIn,
     Data_Person,
     Snackbars,
     Wishlist,

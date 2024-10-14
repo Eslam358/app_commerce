@@ -6,14 +6,14 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 const Titile1 = () => {
   const theme = useTheme();
-  const matches_sm = useMediaQuery(theme.breakpoints.down("sm"));
+  // const matches_md = useMediaQuery(theme.breakpoints.down("sm"));
+  const matches_md = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
     <>
       <Container maxWidth="xl" sx={{ my: 3, py: 3 }}>
         <Stack
-          direction={`${matches_sm?"column-reverse":"row-reverse"}`}
-          // direction={"column-reverse"}
+          direction={`${matches_md?"column-reverse":"row-reverse"}`}
           justifyContent={"center"}
           alignItems={"center"}
           sx={{ my: 3, py: 3 }}
@@ -25,9 +25,11 @@ const Titile1 = () => {
               justifyContent: "flex-end",
               alignItems: "center",
               py: 2,
-              width:`${matches_sm?"100%":"75%"} `,
+              // width:`${matches_md?"100%":"75%"} `,
+              width:{md:"75%", xs:"100%"},
               borderRight: "20px",
-              borderRadius: "55px 0px 0px 5px",
+              // borderRadius: "55px 0px 0px 5px",
+              borderRadius: {md:"55px 0px 0px 5px", xs:"0px 0px 0px 5px"},
               position: "relative",
               border: "1px dashed white",
               outline: "3px solid #1f2937",
@@ -37,6 +39,8 @@ const Titile1 = () => {
                 position: "absolute",
                 width: "40px",
                 height: "120px",
+                // @ts-ignore
+                display:{md:"block", xs:"none"},
                 // @ts-ignore
                 backgroundColor: theme.palette.body_color.primary,
 
@@ -58,10 +62,10 @@ const Titile1 = () => {
             >
               <Button
                 sx={{
-                  px: `${matches_sm?"0":"20px"} `,
+                  px: `${matches_md?"0":"20px"} `,
 
-                  mx:`${matches_sm?"5px":"20px"} `,
-                  my: `${matches_sm?"0":"5px"} `,
+                  mx:`${matches_md?"5px":"20px"} `,
+                  my: `${matches_md?"0":"5px"} `,
 
                   fontWeight: "bold",
                   transition: "0.5s",
@@ -80,7 +84,8 @@ const Titile1 = () => {
             sx={{
            
               py: 3,
-              width: `${matches_sm?"90%":"25%"} `,
+              // width: `${matches_md?"90%":"25%"} `,
+              width:{md:"25%", xs:"100%"},
               position: "relative",
               fontWeight: "bold",
               zIndex: "1",

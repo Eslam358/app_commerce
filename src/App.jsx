@@ -24,6 +24,7 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
+import Dialog_test_signIn from "./components/Public/Dialog_test_Signin";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -50,6 +51,7 @@ function App() {
     // @ts-ignore
     redux_Fun(cart_items());
     redux_Fun(Data_Person_fun_local());
+    // @ts-ignore
     redux_Fun(Categories_items());
   }, []);
 
@@ -65,6 +67,8 @@ function App() {
         >
           <CssBaseline />
           <RouterProvider router={router} />
+          <Dialog_test_signIn />
+
         </ThemeProvider>
       </ColorModeContext.Provider>
   

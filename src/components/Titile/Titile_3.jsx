@@ -23,12 +23,15 @@ const Titel3 = () => {
         <Box sx={{ minWidth: "30px", width: "100%", position: "relative" }}>
           <img
             src="./assets/All_img/banner-21.jpg"
-            style={{ width:`${matches_sm?" 120%":" 100%"}  `}}
+            style={{
+              width: " 100%",
+              height: `${matches_sm ? " 140px" : " 100%"}  `,
+            }}
             alt=""
           />
           <div className=" text_position">
             <Typography
-            //   mb={0}
+              //   mb={0}
               color={"#555"}
               sx={{ fontWeight: "600" }}
               fontSize={"16px"}
@@ -36,51 +39,71 @@ const Titel3 = () => {
               Final Reduction
             </Typography>
             <Typography
-                  variant="h5"
+              variant="h5"
               component="p"
-            //   fontSize={"24px"}
+              //   fontSize={"24px"}
               fontWeight={"bold"}
               color="#222"
             >
               Sale up to 20% Off
             </Typography>
-            <Divider sx={{bgcolor:"black", height:"2px", width:"30%", mt:1}}/>
-            <Typography  color={"#222"} fontSize={"15px"} mt={2}>
-            Only From <span style={{color:"#d23f57", fontWeight:"bold", fontSize:"20px"}}> $270.00</span>
+            <Divider
+              sx={{ bgcolor: "black", height: "2px", width: "30%", mt: 1 }}
+            />
+            <Typography color={"#222"} fontSize={"15px"} mt={2}>
+              Only From{" "}
+              <span
+                style={{
+                  color: "#d23f57",
+                  fontWeight: "bold",
+                  fontSize: "20px",
+                }}
+              >
+                {" "}
+                $270.00
+              </span>
             </Typography>
-  
           </div>
         </Box>
         <Box sx={{ minWidth: "300px", width: "100%", position: "relative" }}>
           <img
             src="./assets/All_img/banner-22.jpg"
-            style={{ width:`${matches_sm?" 120%":" 100%"}  `}}
+            style={{
+              width: " 100%",
+              height: `${matches_sm ? " 140px" : " 100%"}  `,
+            }}
             alt=""
           />
           <div className=" text_position">
             <Typography
-            //   mb={0}
+              //   mb={0}
               color={"#fff"}
               sx={{ fontWeight: "600" }}
               fontSize={"16px"}
             >
-            Weekend Sale
+              Weekend Sale
             </Typography>
-            <Typography
-              fontSize={"24px"}
-              fontWeight={"bold"}
-              color="#fff"
-            >
-             Fine Smart Speaker
+            <Typography fontSize={"24px"} fontWeight={"bold"} color="#fff">
+              Fine Smart Speaker
             </Typography>
-            <Divider sx={{bgcolor:"#fff", height:"2px", width:"30%", mt:1}}/>
-            <Typography  color={"#fff"} fontSize={"15px"} mt={2}>
-            Starting at <span style={{color:"#d23f57", fontWeight:"bold", fontSize:"20px"}}> $270.00</span>
+            <Divider
+              sx={{ bgcolor: "#fff", height: "2px", width: "30%", mt: 1 }}
+            />
+            <Typography color={"#fff"} fontSize={"15px"} mt={2}>
+              Starting at{" "}
+              <span
+                style={{
+                  color: "#d23f57",
+                  fontWeight: "bold",
+                  fontSize: "20px",
+                }}
+              >
+                {" "}
+                $270.00
+              </span>
             </Typography>
-  
           </div>
         </Box>
-
       </Stack>
     </>
   );

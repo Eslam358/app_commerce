@@ -1,9 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Cookies_person } from "../Data_Person";
+import Cookies from "js-cookie";
+
 // ---------------------------------------------------------
 
- const cart_items_ = async () => {
+const cart_items_ = async () => {
+   const data_Cookies_person = Cookies.get("Data_person");
+    const Cookies_person  =data_Cookies_person?  JSON.parse(data_Cookies_person):"";
   const response = await axios.get(
     "https://ecommerce.routemisr.com/api/v1/cart", // رابط API
 

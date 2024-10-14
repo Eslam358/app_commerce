@@ -1,8 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Cookies_person } from "../Data_Person";
+import Cookies from "js-cookie";
+
 // ---------------------------------------------------------
 const postData_cart_item = async (data) => {
+  const data_Cookies_person = Cookies.get("Data_person");
+   const Cookies_person  =data_Cookies_person?  JSON.parse(data_Cookies_person):"";
   const response = await axios.post(
     `https://ecommerce.routemisr.com/api/v1/cart`, // رابط API
     {
@@ -21,6 +24,7 @@ const postData_cart_item = async (data) => {
 
 // تعريف thunk لإرسال طلب POST
 export const cart_add_item = createAsyncThunk("wishlist", async (Data, thunkAPI) => {
+
   try {
     const response = await postData_cart_item(Data);
     console.log("cart_add_item", response);
