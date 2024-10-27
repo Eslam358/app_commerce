@@ -3,19 +3,11 @@ import { styled, alpha } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import EditIcon from "@mui/icons-material/Edit";
-import Divider from "@mui/material/Divider";
-import ArchiveIcon from "@mui/icons-material/Archive";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { Container, IconButton, Stack, useTheme } from "@mui/material";
+import { Container, Stack, useTheme } from "@mui/material";
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import MenuIcon from "@mui/icons-material/Menu";
 import { useSelector } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
@@ -65,6 +57,7 @@ const StyledMenu = styled((props) => (
 }));
 
 const Header3 = () => {
+  // @ts-ignore
   const Categories = useSelector((dat) => dat.Categories);
 
   const theme = useTheme();
@@ -90,7 +83,7 @@ const Header3 = () => {
         });
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
 
@@ -101,6 +94,7 @@ const Header3 = () => {
           direction={"row"}
           justifyContent={"space-between"}
           alignItems={"center"}
+        mt={3}
         >
           <div>
             <Button
@@ -110,9 +104,11 @@ const Header3 = () => {
               aria-expanded={open ? "true" : undefined}
               variant="contained"
               sx={{
+                 // @ts-ignore
                 bgcolor: theme.palette.bg_main.primary,
                 justifyContent: "left",
                 color: "#222",
+                 // @ts-ignore
                 "&:hover": { bgcolor: theme.palette.bg_main.primary },
               }}
               disableElevation

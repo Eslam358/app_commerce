@@ -38,7 +38,7 @@ import { useState } from "react";
 
 import { cart_add_item } from "../../reduxtoolkit/slice/Cart/Add_Item";
 import { cart_items } from "../../reduxtoolkit/slice/Cart/Items_Cart";
-import { Open_Dialog_test } from "../../reduxtoolkit/slice/Dialog_test_sigin";
+import { Open_Dialog_test } from "../../reduxtoolkit/slice/global/Dialog_test_sigin";
 
 export default function ResponsiveDialog({ setOpen, open, item }) {
   const theme = useTheme();
@@ -63,6 +63,11 @@ export default function ResponsiveDialog({ setOpen, open, item }) {
     Redux_fun(cart_Update_quantity({ id, count }));
   };
   const Wishlist__ = async (data) => {
+    if (Data_Person.message !== "success") {
+      Redux_fun(Open_Dialog_test());
+
+      return;
+    }
     setLoading(true);
     // @ts-ignore
     await Redux_fun(wishlist(data));
@@ -146,8 +151,6 @@ export default function ResponsiveDialog({ setOpen, open, item }) {
                       );
                     },
                   }}
-                  onSwiper={(swiper) => console.log(swiper)}
-                  onSlideChange={() => console.log("slide change")}
                 >
                   {item.images?.map((img) => (
                     <SwiperSlide key={img}>
@@ -193,7 +196,7 @@ export default function ResponsiveDialog({ setOpen, open, item }) {
                     brand : {item.brand?.name}
                   </Typography>
                   <Rating
-                    // name="size-small"
+                    readOnly
                     defaultValue={item?.ratingsAverage}
                   />
 
@@ -203,6 +206,7 @@ export default function ResponsiveDialog({ setOpen, open, item }) {
                     className="icon Favorite"
                     aria-label="Favorite"
                     onClick={() =>
+                      
                       Wishlist__({
                         id: item.id,
                         remove: Wishlist_list_data.data?.find(
@@ -248,16 +252,16 @@ export default function ResponsiveDialog({ setOpen, open, item }) {
                       </IconButton>
                       <p>{cart_product.count}</p>
                       <IconButton
-                        //  disabled={cart_product?.count === 1}
+                     
                         onClick={() => {
                           let count = cart_product.count - 1;
                           Update_quantity(cart_product.product.id, count);
                         }}
-                        //  size="small"
+                      
                         aria-label="close"
                         sx={{
                           border: `1px solid ${theme.palette.red_main.main} `,
-                          //  fontSize: "14px",
+                      
                         }}
                       >
                         <HorizontalRuleIcon fontSize="inherit" />

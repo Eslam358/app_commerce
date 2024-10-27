@@ -4,7 +4,7 @@ import DialogContent from "@mui/material/DialogContent";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 
-import { Box, Button, Stack, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
 export default function Dialog_Choose({ setOpen, open, data }) {
   const theme = useTheme();

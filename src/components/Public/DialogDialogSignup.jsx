@@ -20,7 +20,6 @@ export default function DialogSignup() {
   const [open, setOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -36,23 +35,20 @@ export default function DialogSignup() {
         phone: data.phone,
       })
       .then((response) => {
-        // وضع البيانات في الحالة
-        // setProducts(response.data.data);
-        console.log("responseeee", response);
+  
 
         setLoading(false);
       })
       .catch((error) => {
-        // التعامل مع الأخطاء
-        console.log("erroreeeeeeee", error);
+      console.error(error)
+    
+        
         setError(error);
         setLoading(false);
       });
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+
 
   const handleClose = () => {
     setOpen(false);
@@ -81,10 +77,7 @@ export default function DialogSignup() {
             const formData = new FormData(event.currentTarget);
             // @ts-ignore
             const formJson = Object.fromEntries(formData.entries());
-            const email = formJson.email;
-            const fullName = formJson.fullName;
-            console.log(email, fullName);
-            console.log(formJson);
+    
            await handleSignup(formJson);
             handleClose();
           },
@@ -92,10 +85,6 @@ export default function DialogSignup() {
       >
         <DialogTitle>Sign up</DialogTitle>
         <DialogContent>
-          {/* <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
-          </DialogContentText> */}
 
           <InputLabel required htmlFor="fullName">
             fullName

@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Cookies_person } from "../Data_Person";
+import { Cookies_person } from "../global/Data_Person";
 // ---------------------------------------------------------
 
  const postData_wishlist_list = async () => {
   const response = await axios.get(
-    "https://ecommerce.routemisr.com/api/v1/wishlist", // رابط API
+    "https://ecommerce.routemisr.com/api/v1/wishlist",
 
     {
       headers: {
@@ -25,10 +25,11 @@ export const wishlist_list = createAsyncThunk(
     try {
       // استدعاء دالة API التي تستخدم axios
       const response = await postData_wishlist_list();
-      console.log("wishlist_list", response);
+ 
       return response; // إرجاع البيانات إذا نجح الطلب
     } catch (error) {
-      console.log("uuuuuuuuuu", error);
+    console.error(error)
+   
 
       return thunkAPI.rejectWithValue(error.response.data); // إرجاع الخطأ إذا فشل الطلب
     }

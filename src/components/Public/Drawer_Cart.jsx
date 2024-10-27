@@ -13,8 +13,8 @@ import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 import { useSelector, useDispatch } from "react-redux";
 import { Remove_cart_item } from "../../reduxtoolkit/slice/Cart/Remove_Item";
 import { cart_Update_quantity } from "../../reduxtoolkit/slice/Cart/Update_quantity";
-import {  cart_items } from "../../reduxtoolkit/slice/Cart/Items_Cart";
-import {  useState } from "react";
+import { cart_items } from "../../reduxtoolkit/slice/Cart/Items_Cart";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -26,27 +26,19 @@ export default function Cart_Drawer({ toggleDrawer, Drawer_open }) {
   const cart_list = useSelector((dat) => dat.cart_items);
 
   // @ts-ignore
-  const Data_Cart = useSelector((dat) => dat.Remove_cart_item);
-  console.log("oooooooooooooooooo",Data_Cart)
   const navigate = useNavigate();
   const [, setProduct] = useState([]);
   const Remove_item = async (product_id) => {
-     // @ts-ignore
+    // @ts-ignore
     await fun_redux(Remove_cart_item(product_id));
-     // @ts-ignore
+    // @ts-ignore
     await fun_redux(cart_items());
   };
   const Update_quantity = (id, count) => {
-     // @ts-ignore
+    // @ts-ignore
     fun_redux(cart_Update_quantity({ id, count }));
   };
 
-  // useEffect(() => {
-  //   if (Data_Cart.data.products && !Data_Cart.loading) {
-  //     console.log("refresh_cart", Data_Cart);
-  //     // fun_redux(refresh_cart(Data_Cart));
-  //   }
-  // }, [Data_Cart]);
 
   const get_product = (data) => {
     axios
@@ -59,17 +51,16 @@ export default function Cart_Drawer({ toggleDrawer, Drawer_open }) {
         });
       })
       .catch((error) => {
-        console.log(error);
+      console.error(error)
+      
       });
   };
 
-  console.log("cart_list", cart_list.data);
-  console.log("Remove_cart_item", Data_Cart.data?.products);
 
   const DrawerList = (
     <Box
       sx={{
-        width: 300,
+        width: 350,
         position: "relative",
       }}
       role="presentation"
@@ -77,11 +68,12 @@ export default function Cart_Drawer({ toggleDrawer, Drawer_open }) {
       <List>
         <Stack
           p={1}
-          pt={2}
+        
           fontSize={"14px"}
           alignItems="center"
           gap={1}
           direction={"row"}
+          height="7vh"
         >
           <Bag /> {cart_list.data?.products?.length} items
         </Stack>
@@ -94,7 +86,7 @@ export default function Cart_Drawer({ toggleDrawer, Drawer_open }) {
                 <Box textAlign="center" sx={{ fontSize: "14px" }}>
                   <IconButton
                     sx={{
-                       // @ts-ignore
+                      // @ts-ignore
                       border: `1px solid ${theme.palette.red_main.main} `,
                       fontSize: "14px",
                     }}
@@ -117,7 +109,7 @@ export default function Cart_Drawer({ toggleDrawer, Drawer_open }) {
                     size="small"
                     aria-label="close"
                     sx={{
-                       // @ts-ignore
+                      // @ts-ignore
                       border: `1px solid ${theme.palette.red_main.main} `,
                       fontSize: "14px",
                     }}
@@ -174,11 +166,10 @@ export default function Cart_Drawer({ toggleDrawer, Drawer_open }) {
         <Divider />
 
         <Stack
-        // className="fex"
-        height={"10vh"}
+          // className="fex"
+          height={"10vh"}
           px={4}
           gap={1}
-      
           direction={"column"}
           // alignItems={"start"}
           justifyContent={"end"}
@@ -188,7 +179,7 @@ export default function Cart_Drawer({ toggleDrawer, Drawer_open }) {
             sx={{
               textTransform: "capitalize",
               p: "2px",
-               // @ts-ignore
+              // @ts-ignore
               bgcolor: theme.palette.red_main.main,
             }}
             size="small"
@@ -205,7 +196,8 @@ export default function Cart_Drawer({ toggleDrawer, Drawer_open }) {
             color="error"
             size="small"
             variant="outlined"
-            onClick={()=>   navigate(`/ViewCart`)}
+            disabled={location.pathname === "/ViewCart"?true:false}
+            onClick={() => navigate(`/ViewCart`)}
           >
             view cart
           </Button>

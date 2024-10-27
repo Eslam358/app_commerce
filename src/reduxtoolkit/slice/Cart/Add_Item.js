@@ -5,7 +5,9 @@ import Cookies from "js-cookie";
 // ---------------------------------------------------------
 const postData_cart_item = async (data) => {
   const data_Cookies_person = Cookies.get("Data_person");
-   const Cookies_person  =data_Cookies_person?  JSON.parse(data_Cookies_person):"";
+  const Cookies_person = data_Cookies_person
+    ? JSON.parse(data_Cookies_person)
+    : "";
   const response = await axios.post(
     `https://ecommerce.routemisr.com/api/v1/cart`, // رابط API
     {
@@ -23,19 +25,20 @@ const postData_cart_item = async (data) => {
 // --------------------createAsyncThunk-------------------------------------
 
 // تعريف thunk لإرسال طلب POST
-export const cart_add_item = createAsyncThunk("wishlist", async (Data, thunkAPI) => {
+export const cart_add_item = createAsyncThunk(
+  "wishlist",
+  async (Data, thunkAPI) => {
+    try {
+      const response = await postData_cart_item(Data);
 
-  try {
-    const response = await postData_cart_item(Data);
-    console.log("cart_add_item", response);
+      return response; // إرجاع البيانات إذا نجح الطلب
+    } catch (error) {
+      console.error(error);
 
-    return response; // إرجاع البيانات إذا نجح الطلب
-  } catch (error) {
-    console.log("uuuuuuuuuu", error);
-
-    return thunkAPI.rejectWithValue(error.response.data); // إرجاع الخطأ إذا فشل الطلب
+      return thunkAPI.rejectWithValue(error.response.data); // إرجاع الخطأ إذا فشل الطلب
+    }
   }
-});
+);
 
 const cart_add_item_ = createSlice({
   name: "cart_add_item",

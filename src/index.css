@@ -5,10 +5,10 @@
   padding: 0;
   margin: 0;
   box-sizing: content-box;
- /* transform:  ; */
- /* text-transform: capitalize; */
- /* width: fit-content; */
- /* width: calc(); */
+  /* transform:  ; */
+  /* text-transform: capitalize; */
+  /* width: fit-content; */
+  /* width: calc(); */
 }
 
 .fex {
@@ -45,8 +45,7 @@
   width: 100%;
   overflow: hidden;
   height: 40px;
-  animation: name duration timing-function delay iteration-count direction
-    fill-mode;
+
   animation: sss infinite 10s 1s linear;
   overflow: hidden;
 }
@@ -61,35 +60,28 @@
 
 .Swiper-one .swiper-button-prev::after,
 .Swiper-one .swiper-button-next::after {
-  content: url("./assets/SVG_/arrow-right-solid.svg");
 
-  width: 15px;
-  top: -13px;
+  content: url("/assets/SVG/arrow-right-solid.svg");
+
+  width: 16px;
+  height: 55px;
+  top: -15px;
   left: 13px;
-  color: rgba(255, 255, 255, 0);
 
   position: absolute;
 
-
 }
-.Swiper-one .swiper-button-prev::after{
+.Swiper-one .swiper-button-prev::after {
   transform: rotateY(180deg);
   left: 1px;
 }
-.Swiper-one .swiper-button-prev{
+.Swiper-one .swiper-button-prev {
   left: 1px;
   transform: translateX(-35px);
 }
-.Swiper-one .swiper-button-next{
-  /* right: 4%; */
-
+.Swiper-one .swiper-button-next {
   transform: translateX(35px);
 }
-
-
-
-
-
 
 @keyframes sss {
   0% {
@@ -102,27 +94,32 @@
   }
 }
 
-
-
-.ffff{
+.ffff {
   position: relative;
   border-top: 2px solid #999;
- &::after{
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 35px;
-  top: -21px;
-  background-color: rgba(255, 255, 255, 0.753);
-  /* background-color: rgba(55, 26, 185, 0.562); */
- }
- &::before{
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 20px;
-  top: -10px;
-  background-color: rgba(255, 255, 255, 0.808);
-  /* background-color: rgba(179, 17, 17, 0.664); */
- }
+  &::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 35px;
+    top: -21px;
+    background-color: rgba(255, 255, 255, 0.753);
+    /* background-color: rgba(55, 26, 185, 0.562); */
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    top: -10px;
+    background-color: rgba(255, 255, 255, 0.808);
+    /* background-color: rgba(179, 17, 17, 0.664); */
+  }
 }
+
+/* .tt{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+} */

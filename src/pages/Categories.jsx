@@ -38,17 +38,15 @@ import ResponsiveDialog from "../components/Public/Dialog";
 
 export default function Categories() {
     const Params = useParams() || "";
-    console.log(Params)
+
   const Location = useLocation();
   const Navigate = useNavigate();
 
   const item = Location.state.Categories || [];
-  console.log(item);
+
 
   const theme = useTheme();
-  // @ts-ignore
-  const cart_list = useSelector((dat) => dat.cart_items);
-  console.log(cart_list);
+
 
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -88,7 +86,9 @@ export default function Categories() {
   return (
     <>
       <Button onClick={() => Navigate("/")}>Home</Button>
-      <Box sx={{p:2, border:"1px solid #eee", textAlign:"center", fontWeight:"bold", m:2, mb:6, fontSize:"28px"}}>{Params.name}</Box>
+      <Box sx={{p:2, border:"1px solid #eee", textAlign:"center", fontWeight:"bold", m:2, mb:6, fontSize:"28px"}}>{Params.
+// @ts-ignore
+      name}</Box>
       <Stack
         direction={fullScreen ? "column" : "row"}
         gap={2}

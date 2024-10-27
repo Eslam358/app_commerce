@@ -28,7 +28,12 @@ import { wishlist } from "../reduxtoolkit/slice/Wishlist/Wishlist";
 import { wishlist_list } from "../reduxtoolkit/slice/Wishlist/Wishlist_list";
 import { cart_Update_quantity } from "../reduxtoolkit/slice/Cart/Update_quantity";
 import { useEffect, useState } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import {
+  useParams,
+  useLocation,
+  useNavigate,
+  useMatch,
+} from "react-router-dom";
 import { refresh_cart } from "../reduxtoolkit/slice/Cart/Items_Cart";
 
 import { cart_add_item } from "../reduxtoolkit/slice/Cart/Add_Item";
@@ -40,11 +45,11 @@ export default function Item() {
   const Navigate = useNavigate();
 
   const item = Location.state.item || [];
-  console.log(item);
+
 
   const theme = useTheme();
   const cart_list = useSelector((dat) => dat.cart_items);
-  console.log(cart_list);
+
   const Update_quantity_ = useSelector((dat) => dat.Update_quantity);
 
   const cart_product = cart_list.data?.products?.find(
@@ -59,6 +64,7 @@ export default function Item() {
   const [loading, setLoading] = useState(false);
 
   const Update_quantity = (id, count) => {
+      // @ts-ignore
     Redux_fun(cart_Update_quantity({ id, count }));
   };
   const Wishlist__ = async (data) => {
@@ -78,7 +84,7 @@ export default function Item() {
   };
 
   useEffect(() => {
-    // console.log(Update_quantity_.data.data.products);
+    //Update_quantity_.data.data.products);
 
     if (Update_quantity_.data?.products && !Update_quantity_.loading) {
       Redux_fun(refresh_cart(Update_quantity_));
@@ -89,35 +95,28 @@ export default function Item() {
     <>
       <Button onClick={() => Navigate("/")}>Home</Button>
       <Stack
-        direction={fullScreen? "column":"row"}
+        direction={fullScreen ? "column" : "row"}
         gap={2}
         sx={{
           position: "relative",
-
-
-
-          
-         
         }}
       >
         <Box>
           <Box
-        
-            maxWidth={fullScreen? "100vw":"50vw"}
-    
+            maxWidth={fullScreen ? "100vw" : "50vw"}
             sx={{
-                "img":{
-                    width:"55%",
-                    margin:"0  23%"
-                },
-
-              ".fexx": {
-                display: "inline-block",
-                img: { width: "100%" },
-                overflow: "hidden",
-              
+              img: {
+                width: "55%",
+                margin: "0  23%",
               },
 
+              ".fexx": {
+                display: "inline-flex",
+                justifyContent: "center",
+
+                img: { width: "100%" },
+                overflow: "hidden",
+              },
 
               ".swiper-pagination": { marginBottom: "-5px" },
               ".swiper-pagination-bullet": {
@@ -137,8 +136,8 @@ export default function Item() {
             <Swiper
               style={{ padding: "0 0 130px" }}
               modules={[Navigation, Pagination, Scrollbar, A11y]}
-              slidesPerView={1}
-              loop
+              // slidesPerView={1}
+              // loop
               pagination={{
                 dynamicBullets: true,
                 clickable: true,
@@ -155,7 +154,7 @@ export default function Item() {
             >
               {item.images?.map((img) => (
                 <SwiperSlide key={img}>
-                  <img  src={img} alt="ppppp" />
+                  <img src={img} alt="ppppp" />
                 </SwiperSlide>
               ))}
             </Swiper>

@@ -26,11 +26,11 @@ const ClearData_cart_ = async () => {
 export const Clear_cart_ = createAsyncThunk("wishlist", async (Data, thunkAPI) => {
   try {
     const response = await ClearData_cart_();
-    console.log("Clear_response",response)
+
 
     return response; // إرجاع البيانات إذا نجح الطلب
   } catch (error) {
-    console.log("uuuuuuuuuu", error);
+    console.error(error)
 
     return thunkAPI.rejectWithValue(error.response.data); // إرجاع الخطأ إذا فشل الطلب
   }

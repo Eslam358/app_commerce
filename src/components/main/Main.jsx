@@ -5,15 +5,14 @@ import Titel3 from "../Titile/Titile_3";
 import Titel4 from "../Titile/Titile_4";
 import Titel5 from "../Titile/Titile_5";
 import SelectedProducts from "./Selected_Products";
-import Footer from "./Footer";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Categories from "./Categories";
 
 const Main = () => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [, setLoading] = useState(true);
+  const [, setError] = useState(null);
 
   useEffect(() => {
     // جلب البيانات باستخدام axios
@@ -22,9 +21,7 @@ const Main = () => {
       .then((response) => {
         // وضع البيانات في الحالة
         setProducts(response.data.data);
-        console.log("response22355",response)
         setLoading(false);
-        console.log(response.data.data);
       })
       .catch((error) => {
         // التعامل مع الأخطاء
@@ -53,7 +50,7 @@ const Main = () => {
         <Titel5 />
         <SelectedProducts />
       </Container>
-      <Footer />
+   
     </>
   );
 };

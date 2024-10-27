@@ -6,8 +6,8 @@ import { useTheme } from "@mui/material/styles";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Button, Typography } from "@mui/material";
-import { handleClickOpen } from "../../reduxtoolkit/slice/DialogSign";
-import { Close_Dialog_test } from "../../reduxtoolkit/slice/Dialog_test_sigin";
+import { handleClickOpen } from "../../reduxtoolkit/slice/global/DialogSign";
+import { Close_Dialog_test } from "../../reduxtoolkit/slice/global/Dialog_test_sigin";
 import { useEffect, useState } from "react";
 
 export default function Dialog_test_signIn() {

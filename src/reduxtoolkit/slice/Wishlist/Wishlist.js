@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Cookies_person } from "../Data_Person";
+import { Cookies_person } from "../global/Data_Person";
+
 // ---------------------------------------------------------
  const postData_wishlist = async (data) => {
 
-  console.log(data);
+
   
      if (data.remove) {
       true
@@ -43,11 +44,13 @@ import { Cookies_person } from "../Data_Person";
 export const wishlist = createAsyncThunk("wishlist", async (Data, thunkAPI) => {
   try {
     const response = await postData_wishlist(Data);
-    console.log("remove_response",response)
+
+    
 
     return response; // إرجاع البيانات إذا نجح الطلب
   } catch (error) {
-    console.log("uuuuuuuuuu", error);
+  console.error(error)
+ 
 
     return thunkAPI.rejectWithValue(error.response.data); // إرجاع الخطأ إذا فشل الطلب
   }

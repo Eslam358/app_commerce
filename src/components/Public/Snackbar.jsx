@@ -1,7 +1,7 @@
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useSelector, useDispatch } from "react-redux";
-import { Snackbar_Close } from "../../reduxtoolkit/slice/Snackbars";
+import { Snackbar_Close } from "../../reduxtoolkit/slice/global/Snackbars";
 
 export default function Snackbars() {
   // @ts-ignore

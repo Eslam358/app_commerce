@@ -11,10 +11,12 @@ import {
   useTheme,
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useNavigate} from "react-router-dom";
 
 
 const WomensFashion = () => {
   const theme = useTheme();
+  const Navigate = useNavigate();
   const matches_md = useMediaQuery(theme.breakpoints.down("lg"));
 
   return (
@@ -30,9 +32,11 @@ const WomensFashion = () => {
           sx={{ li: { color: "#909090", p: "4px", fontSize: "14px" } }}
         >
           <Box flex={`${matches_md?"1 0 45%":"2 0 23%"}`} minWidth={"250px"}>
-            <Typography sx={{ mt: 0, mb: 0, pl: 0 }}>
+         
+            <IconButton onClick={()=>Navigate("/")} >
               <img src="./assets/All_img/logo.svg" alt="logo" />
-            </Typography>
+
+            </IconButton>
 
             <Typography sx={{ fontSize: "14px", my: 2, color: "#909090" }}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor

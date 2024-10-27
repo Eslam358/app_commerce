@@ -64,11 +64,9 @@ const Categories = ({ category_id }) => {
   };
   const subcategory_fe = (subcategory_id) => {
     const filter_ = products_;
-    console.log(filter_);
     const subcat_ = filter_.filter(
       (a) => a.subcategory[0]._id == subcategory_id
     );
-    console.log(subcat_);
 
     setProducts(subcat_);
   };

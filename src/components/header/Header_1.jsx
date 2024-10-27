@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import { ColorModeContext } from "../../theme";
 import {
   Box,
-  Container,
   IconButton,
   ListItem,
   ListItemIcon,
@@ -33,8 +32,7 @@ const Header1 = () => {
   const colorMode = useContext(ColorModeContext);
   const theme = useTheme();
   // const matches_sm = useMediaQuery(theme.breakpoints.down("sm"));
-  const matches_xs400 =  useMediaQuery('(max-width:400px)');
-
+  const matches_xs400 = useMediaQuery("(max-width:400px)");
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -45,7 +43,6 @@ const Header1 = () => {
 
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);
-    console.log(options[index]);
 
     setAnchorEl(null);
   };
@@ -55,18 +52,14 @@ const Header1 = () => {
   };
 
   return (
-    <Box className="header_1" sx={{ pt:"54px"}}>
+    <>
       <Box
         sx={{
           px: "15px",
-          py: `${matches_xs400? "5px":"0"}`,
-         
+          py: `${matches_xs400 ? "5px" : "0px"}`,
+          mb:3,
+
           bgcolor: "#2b3445",
-          position: "fixed",
-          top: "0",
-          
-          width:"100vw",
-          zIndex: "2",
         }}
       >
         <Stack
@@ -75,16 +68,13 @@ const Header1 = () => {
           alignItems="center"
         >
           <Stack
-        
-           
-            direction={matches_xs400? "column":"row"}
+            direction={matches_xs400 ? "column" : "row"}
             justifyContent="space-between"
             // justifyContent={matches_xs400? "start":"space-between"}
-            alignItems={matches_xs400? "start":"center"}
+            alignItems={matches_xs400 ? "start" : "center"}
             gap={1}
           >
             <Typography
-             
               // component="h1"
               // variant="h6"
               sx={{
@@ -92,7 +82,7 @@ const Header1 = () => {
                 p: "1px 9px",
                 fontSize: 14,
                 fontWeight: "bold",
-             
+
                 color: "white",
                 backgroundColor: "#d23f57",
                 "&:hover": { color: "#d23f57", backgroundColor: "white" },
@@ -101,7 +91,7 @@ const Header1 = () => {
               HOT
             </Typography>
             <Typography
-            //  p={matches_xs400? "15px":"0px"}
+              //  p={matches_xs400? "15px":"0px"}
               //  component={matches_xs400? "span":"p"}
               sx={{ fontSize: "11px", color: "white" }}
             >
@@ -207,7 +197,7 @@ const Header1 = () => {
           </Box>
         </Stack>
       </Box>
-    </Box>
+    </>
   );
 };
 

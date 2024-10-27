@@ -13,17 +13,17 @@ import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
-  colors,
+
   IconButton,
   TableFooter,
   Typography,
-  useTheme,
+
 } from "@mui/material";
 import { Remove_cart_item } from "../reduxtoolkit/slice/Cart/Remove_Item";
 import { Clear_cart_ } from "../reduxtoolkit/slice/Cart/Clear_Cart";
 import { cart_Update_quantity } from "../reduxtoolkit/slice/Cart/Update_quantity";
 import { useEffect, useState } from "react";
-import { cart_items, refresh_cart } from "../reduxtoolkit/slice/Cart/Items_Cart";
+import { cart_items} from "../reduxtoolkit/slice/Cart/Items_Cart";
 import Dialog_Choose from "../components/Public/Dialog_Choose";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -36,6 +36,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.footer}`]: {
     fontSize: 14,
+      // @ts-ignore
     color: theme.palette.red_main.main,
   },
 }));
@@ -52,30 +53,32 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function ViewCart() {
   const Navigate = useNavigate();
-  const theme = useTheme();
-  const Data_Cart = useSelector((dat) => dat.Remove_cart_item);
+  // const theme = useTheme();
+  // const Data_Cart = useSelector((dat) => dat.Remove_cart_item);
+    // @ts-ignore
   const Clear_Cart = useSelector((dat) => dat.Clear_cart);
+    // @ts-ignore
   const cart_list = useSelector((dat) => dat.cart_items || []);
   
-  console.log("Clear_Cart",Clear_Cart, Clear_Cart.data.message );
+
 
   const [total_count, setTotal_count] = useState(0);
   const [open, setOpen] = useState(false);
-  console.log("cart_list",cart_list);
+
 
   const fun_redux = useDispatch();
 
   const Remove_item = async(product_id) => {
+      // @ts-ignore
     await fun_redux(Remove_cart_item(product_id));
     await fun_redux(cart_items());
   };
-
+  // @ts-ignore
   const Clear_cart =  () => {
   fun_redux(Clear_cart_());
   setOpen(false)
 
     if (Clear_Cart.data.message === "success") {
-     console.log("kkkkkkkkkkkkkkkkkkkkkk");
      
       fun_redux(cart_items());
     }
@@ -94,11 +97,7 @@ export default function ViewCart() {
     
   }, [Clear_Cart.data.message]);
 
-  // useEffect(() => {
-  //   if (Data_Cart.data?.products && !Data_Cart.loading) {
-  //     fun_redux(refresh_cart(Data_Cart));
-  //   }
-  // }, [Data_Cart]);
+ 
 
   useEffect(() => {
     const total = cart_list.data?.products?.reduce((A, B) => A + B.count, 0);

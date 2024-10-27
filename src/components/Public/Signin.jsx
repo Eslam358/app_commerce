@@ -10,12 +10,14 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   handleClose_Signin,
   handle_Open_Signup,
-} from "../../reduxtoolkit/slice/DialogSign";
-import { Data_Person_fun_get } from "../../reduxtoolkit/slice/Data_Person";
+} from "../../reduxtoolkit/slice/global/DialogSign";
+import { Data_Person_fun_get } from "../../reduxtoolkit/slice/global/Data_Person";
 import {
   Snackbar_massage_success,
   Snackbar_massage_error,
-} from "../../reduxtoolkit/slice/Snackbars";
+} from "../../reduxtoolkit/slice/global/Snackbars";
+import { wishlist_list } from "../../reduxtoolkit/slice/Wishlist/Wishlist_list";
+import { cart_items } from "../../reduxtoolkit/slice/Cart/Items_Cart";
 
 import {
   Box,
@@ -53,7 +55,7 @@ export default function Signin() {
   };
   // @ts-ignore
   const open_sign_in = useSelector((dat) => dat.Sign_in);
-  const sign_in_Fun = useDispatch();
+  const dispatch = useDispatch();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -65,7 +67,7 @@ export default function Signin() {
     data = checked
       ? { email: "eslam900aa@gmail.com", password: "eslam@123" }
       : data;
-    console.log(checked);
+
 
     axios
 
@@ -73,24 +75,27 @@ export default function Signin() {
       .then((response) => {
         // وضع البيانات في الحالة
 
-        sign_in_Fun(
+        dispatch(
           Snackbar_massage_success(
             response.data.message + " " + response.data.user.name
           )
         );
-        sign_in_Fun(Data_Person_fun_get(response.data));
-        console.log("response.data.massage", response.data.message);
-
+        dispatch(Data_Person_fun_get(response.data));
+   
+        dispatch(wishlist_list());
+        // @ts-ignore
+        dispatch(cart_items());
         setLoading(false);
-        sign_in_Fun(handleClose_Signin());
+        dispatch(handleClose_Signin());
       })
       .catch((error) => {
+        console.error(error)
         // التعامل مع الأخطاء
-        console.log("erroreeeeeeee", error);
+     
 
-        sign_in_Fun(Snackbar_massage_error(error.message));
+        dispatch(Snackbar_massage_error(error.message));
         setLoading(false);
-        sign_in_Fun(handleClose_Signin());
+        dispatch(handleClose_Signin());
       });
   };
 
@@ -109,7 +114,7 @@ export default function Signin() {
     if (reason === "backdropClick") {
       return;
     }
-    sign_in_Fun(handleClose_Signin());
+    dispatch(handleClose_Signin());
   };
 
   return (
@@ -182,8 +187,8 @@ export default function Signin() {
                 textTransform: "capitalize",
               }}
               onClick={() => {
-                sign_in_Fun(handleClose_Signin());
-                sign_in_Fun(handle_Open_Signup());
+                dispatch(handleClose_Signin());
+                dispatch(handle_Open_Signup());
               }}
             >
               Register
@@ -207,7 +212,7 @@ export default function Signin() {
         </DialogContent>
 
         <DialogActions sx={{ pt: "0" }}>
-          <Button onClick={() => sign_in_Fun(handleClose_Signin())}>
+          <Button onClick={() => dispatch(handleClose_Signin())}>
             Cancel
           </Button>
           <Button type="submit">

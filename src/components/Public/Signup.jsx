@@ -9,12 +9,12 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   handleClose_Signup,
   handleClickOpen,
-} from "../../reduxtoolkit/slice/DialogSign";
-import { Data_Person_fun_get } from "../../reduxtoolkit/slice/Data_Person";
+} from "../../reduxtoolkit/slice/global/DialogSign";
+import { Data_Person_fun_get } from "../../reduxtoolkit/slice/global/Data_Person";
 import {
   Snackbar_massage_success,
   Snackbar_massage_error,
-} from "../../reduxtoolkit/slice/Snackbars";
+} from "../../reduxtoolkit/slice/global/Snackbars";
 
 import {
   CircularProgress,
@@ -51,14 +51,16 @@ export default function Sign_up() {
         "https://ecommerce.routemisr.com/api/v1/auth/signup",
         data
       );
-      console.log(response.data);
+  
+      
       sign_in_Fun(
         Snackbar_massage_success(
           response.data.message + " " + response.data.user.name
         )
       );
       sign_in_Fun(Data_Person_fun_get(response.data));
-      console.log("response.data.massage", response.data.message);
+  
+      
 
       setLoading(false);
       sign_in_Fun(handleClose_Signup());
@@ -70,16 +72,14 @@ export default function Sign_up() {
       //   sign_in_Fun(handleClose_Signup());
 
       if (error.response) {
-        // 01099955146
-        // الخادم رد بحالة خطأ
-        console.log("Response Error:", error.response.data);
-        console.log("Status:", error.response.status);
+        console.error(error.response)
+      
       } else if (error.request) {
         // تم إرسال الطلب ولكن لم يتم الرد من الخادم
-        console.log("Request Error:", error.request);
+       console.error("Request Error:", error.request);
       } else {
         // حدث خطأ في إعداد الطلب
-        console.log("Error Message:", error.message);
+        console.error( "Error Message:", error.message);
       }
     }
   };

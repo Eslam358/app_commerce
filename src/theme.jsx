@@ -25,15 +25,18 @@ export const getDesignTokens = (mode) => ({
           // palette values for light mode
           text: {
             primary: "#2B3445",
+            main: "#000",
           },
           body_color: {
             primary: "#f6f6f6",
+            main: "#fff",
           },
           grey_: {
             primary: grey[100],
           },
           bg_main: {
             primary: "#f3f5f9",
+            main: "#fff",
       
           },
           neutral: {
@@ -55,6 +58,7 @@ export const getDesignTokens = (mode) => ({
           },
           bg_main: {
             primary: "#999",
+            main: "#000",
           },
           grey_: {
             primary: grey[600],
@@ -68,6 +72,7 @@ export const getDesignTokens = (mode) => ({
           },
           text: {
             primary: "#fff",
+            main: "#fff",
           },
           red_main: {
             main: "#d23f57",

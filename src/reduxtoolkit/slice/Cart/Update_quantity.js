@@ -27,11 +27,11 @@ const postData_cart_item = async (data) => {
 export const cart_Update_quantity = createAsyncThunk("wishlist", async (Data, thunkAPI) => {
   try {
     const response = await postData_cart_item(Data);
-    console.log("cart_Update_quantity", response);
+
 
     return response; // إرجاع البيانات إذا نجح الطلب
   } catch (error) {
-    console.log("uuuuuuuuuu", error);
+    console.error(error)
 
     return thunkAPI.rejectWithValue(error.response.data); // إرجاع الخطأ إذا فشل الطلب
   }

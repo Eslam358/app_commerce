@@ -28,11 +28,12 @@ const RemoveData_cart_item = async (data) => {
 export const Remove_cart_item = createAsyncThunk("wishlist", async (Data, thunkAPI) => {
   try {
     const response = await RemoveData_cart_item(Data);
-    console.log("remove_response",response)
+
+    
 
     return response; // إرجاع البيانات إذا نجح الطلب
   } catch (error) {
-    console.log("uuuuuuuuuu", error);
+    console.error(error)
 
     return thunkAPI.rejectWithValue(error.response.data); // إرجاع الخطأ إذا فشل الطلب
   }

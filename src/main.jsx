@@ -5,6 +5,7 @@ import "./index.css";
 import "./indexx.scss";
 import { Provider } from "react-redux";
 import store from "./reduxtoolkit/Store/Store";
+// import { BrowserRouter } from "react-router-dom";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

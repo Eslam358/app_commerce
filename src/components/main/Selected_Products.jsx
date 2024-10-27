@@ -32,7 +32,7 @@ const SelectedProducts = () => {
         // التعامل مع الأخطاء
         // setError(error);
         // setLoading(false);
-        console.log(error);
+        console.lo(error);
         
       });
   };

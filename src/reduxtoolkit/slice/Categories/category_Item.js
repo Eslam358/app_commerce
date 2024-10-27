@@ -18,10 +18,12 @@ export const Category_items = createAsyncThunk(
     try {
       // استدعاء دالة API التي تستخدم axios
       const response = await Category_items_();
-      console.log("Category_items", response);
+  
       return response; // إرجاع البيانات إذا نجح الطلب
     } catch (error) {
-      console.log("uuuuuuuuuu", error);
+    console.error(error)
+   
+      
 
       return thunkAPI.rejectWithValue(error.response.data); // إرجاع الخطأ إذا فشل الطلب
     }
