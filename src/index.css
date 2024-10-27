@@ -70,6 +70,7 @@
 
   position: absolute;
 
+
 }
 .Swiper-one .swiper-button-prev::after {
   transform: rotateY(180deg);

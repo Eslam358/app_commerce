@@ -36,6 +36,7 @@ const Search = styled("div")(({ theme }) => ({
   flexGrow: ".8",
   p: "0",
   border: "1px solid #777",
+  ".MuiList-root.MuiList-padding": { padding: "0px !important"},
 
   borderRadius: "20px",
 
@@ -153,7 +154,6 @@ const Header2 = () => {
   // -------------------------------------------------
   return (
     <>
-      <Box sx={{ my: 1 }}>
         <Container
           maxWidth="xl"
           sx={{
@@ -166,13 +166,13 @@ const Header2 = () => {
             <IconButton onClick={() => navigate("/")}>
               {theme.palette.mode === "light" ? (
                 <img
-                  width={"100%"}
+                  width={`${matches_sm ?"70%":"100%"}`}
                   src="./assets/logo/logo2.b6e97da2.svg"
                   alt="logo"
                 />
               ) : (
                 <img
-                  width={"100%"}
+                  width={`${matches_sm ?"70%":"100%"}`}
                   src="./assets/All_img/logo.svg"
                   alt="logo"
                 />
@@ -197,7 +197,7 @@ const Header2 = () => {
                       width: "90%",
                       outline: "none",
                       ".MuiInputBase-root.MuiOutlinedInput-root": {
-                        padding: `${matches_sm ? "0px" : "0"}`,
+                        padding: `0`,
                       },
                     }}
                     options={products_fil}
@@ -235,9 +235,12 @@ const Header2 = () => {
                     renderInput={(params) => (
                       <TextField
                         sx={{
-                          ".MuiOutlinedInput-notchedOutline": { all: "unset" },
+                          ".MuiOutlinedInput-notchedOutline": { all: "unset"},
+                         
+                          "input.MuiInputBase-input ": { p: "0px 11px !important"},
 
-                          ml: `${matches_sm ? "0px" : "40px"}`,
+                          ml: `${matches_sm ? "10px" : "40px"}`,
+                       
                         }}
                         {...params}
                         placeholder="Search…"
@@ -264,7 +267,7 @@ const Header2 = () => {
                       borderTopRightRadius: "20px",
                       px: "0px",
                       ".css-10zu4gy-MuiListItem-root": {
-                        p: `${matches_sm ? "0px" : "9px"}`,
+                        p: `${matches_sm ? "0px" : "5px"}`,
                       },
                     }}
                   >
@@ -380,7 +383,7 @@ const Header2 = () => {
             data={cart_list.data.products}
           />
         </Container>
-      </Box>
+   
     </>
   );
 };

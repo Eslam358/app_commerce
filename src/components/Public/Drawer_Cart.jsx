@@ -60,8 +60,9 @@ export default function Cart_Drawer({ toggleDrawer, Drawer_open }) {
   const DrawerList = (
     <Box
       sx={{
-        width: 350,
+        width: 300,
         position: "relative",
+      
       }}
       role="presentation"
     >
@@ -73,13 +74,13 @@ export default function Cart_Drawer({ toggleDrawer, Drawer_open }) {
           alignItems="center"
           gap={1}
           direction={"row"}
-          height="7vh"
+          height="6vh"
         >
           <Bag /> {cart_list.data?.products?.length} items
         </Stack>
 
         <Divider />
-        <Box height="80vh" sx={{ overflow: "auto" }}>
+        <Box height="78vh" sx={{ overflow: "auto" }}>
           {cart_list.data?.products?.map((product, index) => (
             <Box key={index}>
               <ListItem sx={{ p: 1 }}>
