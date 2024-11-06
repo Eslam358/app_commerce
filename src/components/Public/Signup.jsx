@@ -17,17 +17,20 @@ import {
 } from "../../reduxtoolkit/slice/global/Snackbars";
 
 import {
+  Box,
   CircularProgress,
   IconButton,
   InputAdornment,
   InputLabel,
   OutlinedInput,
   Typography,
+  useTheme
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 
 export default function Sign_up() {
+  const theme = useTheme();
   // @ts-ignore
   const open_sign_up = useSelector((dat) => dat.Sign_up);
   const sign_in_Fun = useDispatch();
@@ -118,7 +121,22 @@ export default function Sign_up() {
           },
         }}
       >
-        <DialogTitle>Sign in</DialogTitle>
+                <Box sx={{width:"100px", p:0,mx:"auto",mt:2}}>
+        {theme.palette.mode === "light" ? (
+                <img
+                  width="100%"
+                  src="./assets/logo/logo2.b6e97da2.svg"
+                  alt="logo"
+                />
+              ) : (
+                <img
+                  width="100%"
+                  src="./assets/All_img/logo.svg"
+                  alt="logo"
+                />
+              )}
+        </Box>
+        <DialogTitle sx={{ pt:0}}>Sign in</DialogTitle>
         <DialogContent>
           {/* <DialogContentText>
             To subscribe to this website, please enter your email address here. We
@@ -229,7 +247,7 @@ export default function Sign_up() {
                 fontWeight: "bold",
                 textTransform: "capitalize",
                 p: "0px",
-                color: "#222",
+                color: `${theme.palette.text.primary}`,
                 minWidth: "fit-content",
               }}
               onClick={() => {
@@ -249,7 +267,7 @@ export default function Sign_up() {
                 fontWeight: "bold",
                 textTransform: "capitalize",
                 p: "0px",
-                color: "#222",
+                color: `${theme.palette.text.primary}`,
                 minWidth: "fit-content",
           
               }}

@@ -18,7 +18,7 @@ import {
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import "./header_1.scss";
+
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import List from "@mui/material/List";
