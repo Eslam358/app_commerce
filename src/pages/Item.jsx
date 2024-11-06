@@ -10,6 +10,7 @@ import {
   CardActions,
   CardContent,
   CircularProgress,
+  Container,
   IconButton,
   Rating,
   Stack,
@@ -92,13 +93,15 @@ export default function Item() {
   }, [Update_quantity_.data]);
 
   return (
-    <>
-      <Button onClick={() => Navigate("/")}>Home</Button>
+  
+     <Container maxWidth="xl">
       <Stack
         direction={fullScreen ? "column" : "row"}
         gap={2}
         sx={{
           position: "relative",
+          my:4,
+          
         }}
       >
         <Box>
@@ -293,7 +296,7 @@ export default function Item() {
                     width: "90%",
                     py: 1,
                     mx: "auto",
-                    color: "#222",
+                    color: theme.palette.text.button,
                     fontWeight: "bold",
                     transition: "0.5s",
                     border: "1px solid #777",
@@ -314,6 +317,7 @@ export default function Item() {
           </Card>
         </Box>
       </Stack>
-    </>
+      </Container>
+  
   );
 }

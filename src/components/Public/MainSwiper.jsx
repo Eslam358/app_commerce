@@ -43,6 +43,7 @@ function MainSwiper({ Arr, num }) {
   const Data_Person = useSelector((dat) => dat.Data_Person);
   // @ts-ignore
   const Cart_list = useSelector((dat) => dat.cart_items);
+  const cart_add_item_data = useSelector((dat) => dat.cart_add_item);
   // @ts-ignore
   const Wishlist_list_data = useSelector((dat) => dat.Wishlist_list);
   const Redux_fun = useDispatch();
@@ -227,7 +228,7 @@ function MainSwiper({ Arr, num }) {
                           width: "90%",
 
                           mx: "auto",
-                          color: theme.palette.text.primary,
+                          color: theme.palette.text.button,
                           fontWeight: "bold",
                           transition: "0.5s",
                           border: "1px solid #777",
@@ -240,12 +241,15 @@ function MainSwiper({ Arr, num }) {
                         }}
                         size="medium"
                       >
-                        Add to Cart
-                        {Cart_list.loading && loading_item == item.id && (
+                       {((cart_add_item_data.loading || Cart_list.loading) && loading_item === item.id) ? "loading...":" Add to Car"}
+                        {((cart_add_item_data.loading || Cart_list.loading) && loading_item === item.id) && (
+                       
                           <CircularProgress
-                            sx={{ position: "absolute" }}
-                            size={18}
+                         sx={{ position: "absolute"}}
+                            size={25}
                           />
+                     
+                          
                         )}
                       </Button>
                     </CardActions>

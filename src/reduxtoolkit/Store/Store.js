@@ -3,7 +3,6 @@ import {Sign_in, Sign_up} from "../slice/global/DialogSign";
 import Data_Person from "../slice/global/Data_Person";
 import test_singIn from "../slice/global/Dialog_test_sigin";
 import Snackbars from "../slice/global/Snackbars";
-// import theme from "../slice/global/theme";
 import Wishlist from "../slice/Wishlist/Wishlist";
 import Wishlist_list from "../slice/Wishlist/Wishlist_list";
 import cart_add_item from "../slice/Cart/Add_Item";
@@ -22,7 +21,7 @@ const store = configureStore({
     test_singIn,
     Data_Person,
     Snackbars,
-    // theme,
+
     Wishlist,
     Wishlist_list,
     cart_add_item,

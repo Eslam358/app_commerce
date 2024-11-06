@@ -3,7 +3,7 @@ import CssBaseline from "@mui/material/CssBaseline"; //--3
 
 import { ColorModeContext, useMode } from "./theme";
 
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { wishlist_list } from "./reduxtoolkit/slice/Wishlist/Wishlist_list";
 import { cart_items } from "./reduxtoolkit/slice/Cart/Items_Cart";
@@ -39,18 +39,27 @@ const router = createBrowserRouter(
 );
 
 function App() {
+   // @ts-ignore
+  const Data_Person = useSelector((dat) => dat.Data_Person);
   const [theme, colorMode] = useMode();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // @ts-ignore
-    dispatch(wishlist_list());
-    // @ts-ignore
-    dispatch(cart_items());
-    dispatch(Data_Person_fun_local());
-    // @ts-ignore
+     // @ts-ignore
     dispatch(Categories_items());
-  }, []);
+    const AA = async () => {
+      // @ts-ignore
+      await dispatch(Data_Person_fun_local());
+      if (Data_Person.message === "success") {
+        // @ts-ignore
+        dispatch(wishlist_list());
+        // @ts-ignore
+        dispatch(cart_items());
+       
+      }
+    };
+    AA()
+  }, [Data_Person.message, dispatch]);
 
   return (
     <>

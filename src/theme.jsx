@@ -25,6 +25,7 @@ export const getDesignTokens = (mode) => ({
           // palette values for light mode
           text: {
             primary: "#2B3445",
+            button: "#2B3445",
             main: "#000",
           },
           body_color: {
@@ -73,6 +74,7 @@ export const getDesignTokens = (mode) => ({
           text: {
             primary: "#fff",
             main: "#fff",
+            button: "#888",
           },
           red_main: {
             main: "#d23f57",

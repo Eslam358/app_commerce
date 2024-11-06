@@ -14,6 +14,8 @@ import {
   Box,
   Button,
 
+  Container,
+
   IconButton,
   TableFooter,
   Typography,
@@ -106,8 +108,9 @@ export default function ViewCart() {
 
   return (
     <>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+     <Container maxWidth="xl" sx={{my:3}}  >
+      <TableContainer component={Paper} >
+        <Table sx={{ minWidth: 800 }} aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell>name</StyledTableCell>
@@ -118,7 +121,7 @@ export default function ViewCart() {
               <StyledTableCell align="center"></StyledTableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody  >
             {cart_list.data?.products?.length > 0 ? (
               cart_list.data.products?.map((product) => (
                 <StyledTableRow key={product.product.id}>
@@ -267,6 +270,7 @@ export default function ViewCart() {
           )}
         </Table>
       </TableContainer>
+      </Container>
       <Dialog_Choose
         setOpen={setOpen}
         open={open}

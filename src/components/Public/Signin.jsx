@@ -27,6 +27,7 @@ import {
   InputLabel,
   OutlinedInput,
   Typography,
+  useTheme
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
@@ -48,6 +49,7 @@ const PinkSwitch = styled(Switch)(({ theme }) => ({
 }));
 
 export default function Signin() {
+  const theme = useTheme();
   const [checked, setChecked] = useState(false);
 
   const handleChange = (event) => {
@@ -135,7 +137,22 @@ export default function Signin() {
           },
         }}
       >
-        <DialogTitle>Sign in</DialogTitle>
+        <Box sx={{width:"100px", p:0,mx:"auto",mt:2}}>
+        {theme.palette.mode === "light" ? (
+                <img
+                  width="100%"
+                  src="./assets/logo/logo2.b6e97da2.svg"
+                  alt="logo"
+                />
+              ) : (
+                <img
+                  width="100%"
+                  src="./assets/All_img/logo.svg"
+                  alt="logo"
+                />
+              )}
+        </Box>
+        <DialogTitle sx={{ pt:0}}>Sign in</DialogTitle>
 
         <DialogContent>
           <InputLabel required htmlFor="email">

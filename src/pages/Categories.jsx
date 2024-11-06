@@ -10,6 +10,7 @@ import {
   CardContent,
   CardMedia,
   CircularProgress,
+  Container,
   IconButton,
   Rating,
   Stack,
@@ -85,7 +86,7 @@ export default function Categories() {
 
   return (
     <>
-      <Button onClick={() => Navigate("/")}>Home</Button>
+     <Container maxWidth="xl" sx={{my:5}}>
       <Box sx={{p:2, border:"1px solid #eee", textAlign:"center", fontWeight:"bold", m:2, mb:6, fontSize:"28px"}}>{Params.
 // @ts-ignore
       name}</Box>
@@ -220,7 +221,7 @@ export default function Categories() {
                     width: "90%",
 
                     mx: "auto",
-                    color: "#222",
+                    color: theme.palette.text.button,
                     fontWeight: "bold",
                     transition: "0.5s",
                     border: "1px solid #777",
@@ -280,8 +281,8 @@ export default function Categories() {
           {/* ------------------------------------------------------- */}
         </Stack>
       </Stack>
+      </Container>
       <ResponsiveDialog setOpen={setOpen} open={open} item={item_} />
-
     </>
   );
 }

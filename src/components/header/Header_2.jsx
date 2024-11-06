@@ -162,6 +162,7 @@ const Header2 = () => {
             alignItems: "center",
           }}
         >
+       
           {!open_search && (
             <IconButton onClick={() => navigate("/")}>
               {theme.palette.mode === "light" ? (

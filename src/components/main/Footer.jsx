@@ -19,6 +19,7 @@ const WomensFashion = () => {
   const Navigate = useNavigate();
   const matches_md = useMediaQuery(theme.breakpoints.down("lg"));
 
+
   return (
     <footer style={{ backgroundColor: "#222935" }}>
       <Container maxWidth="xl">
@@ -33,10 +34,11 @@ const WomensFashion = () => {
         >
           <Box flex={`${matches_md?"1 0 45%":"2 0 23%"}`} minWidth={"250px"}>
          
-            <IconButton onClick={()=>Navigate("/")} >
+            <IconButton onClick={()=>Navigate("/")} sx={{"&:hover":{bgcolor:"transparent"}}} >
               <img src="./assets/All_img/logo.svg" alt="logo" />
 
             </IconButton>
+          
 
             <Typography sx={{ fontSize: "14px", my: 2, color: "#909090" }}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor
@@ -61,7 +63,7 @@ const WomensFashion = () => {
               variant="outlined"
               startIcon={<Google_play />}
             >
-              <div>
+              <Box width={100}>
                 <Typography sx={{ textAlign: "left" }} fontSize={"9px"}>
                   git it on
                 </Typography>
@@ -72,7 +74,7 @@ const WomensFashion = () => {
                 >
                   google play
                 </Typography>
-              </div>
+              </Box>
             </Button>
             <Button
               sx={{
@@ -92,7 +94,8 @@ const WomensFashion = () => {
               variant="outlined"
               startIcon={<App_Store />}
             >
-              <div>
+              <Box width={100}
+              >
                 <Typography fontSize={"9px"}>Download on the</Typography>
                 <Typography
                   sx={{ lineHeight: "13px" }}
@@ -101,7 +104,7 @@ const WomensFashion = () => {
                 >
                   App Store
                 </Typography>
-              </div>
+              </Box>
             </Button>
           </Box>
           <Box flex={`${matches_md?"1 0 45%":"2 0 20%"}`}minWidth={"150px"}>
