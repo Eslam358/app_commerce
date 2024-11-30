@@ -7,6 +7,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import ListItemText from "@mui/material/ListItemText";
 import { Button, IconButton, Stack, useTheme } from "@mui/material";
@@ -20,12 +21,17 @@ import axios from "axios";
 
 // eslint-disable-next-line react/prop-types
  function Wishlist_Drawer({ toggleDrawer, Drawer_open }) {
-
-function clear_list() {
+const [loading, setLoading] = useState(false)
+async function clear_list() {
+  setLoading(true)
   Wishlist_list_data.data.forEach(prodect => {
-   Redux_fun(wishlist({ id: prodect.id, remove: prodect }));
+    ( async()=>{
+
+     await Redux_fun(wishlist({ id: prodect.id, remove: prodect }));
+    })()
   });
-  Redux_fun(wishlist_list());
+ await Redux_fun(wishlist_list());
+ setLoading(false);
   toggleDrawer(false)
 }
 
@@ -176,6 +182,9 @@ function clear_list() {
             variant="outlined"
           >
             Clear wishlist
+            {loading  && (
+          <CircularProgress sx={{ position: "absolute" }} size={25} />
+        )}
           </Button>
         </Stack>
       </List>

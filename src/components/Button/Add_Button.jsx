@@ -4,6 +4,7 @@ import { Add_cart } from "../../reduxtoolkit/slice/Cart/Items_Cart";
 import { useSelector, useDispatch } from "react-redux";
 import Button from "@mui/material/Button";
 import { Open_Dialog_test } from "../../reduxtoolkit/slice/global/Dialog_test_sigin";
+import { cart_add_item } from "../../reduxtoolkit/slice/Cart/Add_Item";
 import  { useEffect, useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import CircularProgress from "@mui/material/CircularProgress";

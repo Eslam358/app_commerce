@@ -79,7 +79,7 @@ const Hero = () => {
                 <img
                   src="./assets/imgss/banner-25.jpg"
                   alt=""
-                  style={{ width: "100%", height: "100%" }}
+                  style={{ width: "100%", height: "100%",     filter: "blur(3px)" }}
                 />
   <Box className=" text_position">
               <Typography mb={2} color={"#666"} fontSize={"16px"}>
@@ -110,7 +110,7 @@ const Hero = () => {
         >
           <Box flexGrow={1} sx={{ position: "relative" }}>
             <img
-              style={{ width: "100%", margin: "5px 0 0 5px" }}
+              style={{ width: "100%", margin: "5px 0 0 5px"}}
               src="./assets/imgss/banner-16.jpg"
               alt=""
             />
