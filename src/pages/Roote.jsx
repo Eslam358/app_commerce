@@ -8,6 +8,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Header2 from "../components/header/Header_2";
 
+
 const Roote = () => {
   const location = useLocation();
   const [scrollPosition, setScrollPosition] = useState(window.scrollY);

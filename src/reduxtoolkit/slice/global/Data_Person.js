@@ -7,10 +7,7 @@ const save_Cookies_person = (data) => {
 
 const data_Cookies_person = Cookies.get("Data_person");
 export const Cookies_person  =data_Cookies_person?  JSON.parse(data_Cookies_person):"";
-  
-// Cookies.remove("Data_person", 1);
-console.log("Cookies");
-console.log(Cookies);
+
 
 
 const Data_Person = createSlice({

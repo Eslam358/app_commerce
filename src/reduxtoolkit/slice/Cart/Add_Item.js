@@ -59,6 +59,8 @@ const cart_add_item_ = createSlice({
       .addCase(cart_add_item.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload; // تخزين البيانات المرتجعة في الـ state
+     
+        
       })
       // الحالة عندما يفشل الطلب
       .addCase(cart_add_item.rejected, (state, action) => {

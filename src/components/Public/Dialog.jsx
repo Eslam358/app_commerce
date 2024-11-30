@@ -1,5 +1,5 @@
+// @ts-nocheck
 /* eslint-disable react/prop-types */
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -36,9 +36,13 @@ import { wishlist_list } from "../../reduxtoolkit/slice/Wishlist/Wishlist_list";
 import { cart_Update_quantity } from "../../reduxtoolkit/slice/Cart/Update_quantity";
 import { useState } from "react";
 
-import { cart_add_item } from "../../reduxtoolkit/slice/Cart/Add_Item";
-import { cart_items } from "../../reduxtoolkit/slice/Cart/Items_Cart";
+import {
+
+  Update_cart,
+  Remove_cart,
+} from "../../reduxtoolkit/slice/Cart/Items_Cart";
 import { Open_Dialog_test } from "../../reduxtoolkit/slice/global/Dialog_test_sigin";
+import Add_Button from "../Button/Add_Button";
 
 export default function ResponsiveDialog({ setOpen, open, item }) {
   const theme = useTheme();
@@ -47,8 +51,9 @@ export default function ResponsiveDialog({ setOpen, open, item }) {
   const cart_product = cart_list.data.products?.find(
     (a) => a.product.id === item.id
   );
-
-  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const width_450 = useMediaQuery('(max-width:500px)');
+  const width_800 = useMediaQuery('(max-width:800px)');
+  // const width_800 = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleClose = () => {
     setOpen(false);
@@ -61,6 +66,11 @@ export default function ResponsiveDialog({ setOpen, open, item }) {
 
   const Update_quantity = (id, count) => {
     Redux_fun(cart_Update_quantity({ id, count }));
+    if (count === 0) {
+      Redux_fun(Remove_cart(id));
+      return;
+    }
+    Redux_fun(Update_cart({ id, count }));
   };
   const Wishlist__ = async (data) => {
     if (Data_Person.message !== "success") {
@@ -76,17 +86,10 @@ export default function ResponsiveDialog({ setOpen, open, item }) {
     setLoading(false);
   };
 
-  const add_item = async (data) => {
-    // @ts-ignore
-    await Redux_fun(cart_add_item(data));
-    // @ts-ignore
-    await Redux_fun(cart_items());
-  };
-
   return (
     <>
       <Dialog
-        fullScreen={fullScreen}
+        width_800={width_800}
         maxWidth={"md"}
         fullWidth={true}
         open={open}
@@ -95,7 +98,8 @@ export default function ResponsiveDialog({ setOpen, open, item }) {
       >
         <DialogContent>
           <Stack
-            direction={"row"}
+            // direction={"row"}
+            direction={width_800 ? "column" : "row"}
             sx={{
               position: "relative",
 
@@ -110,8 +114,9 @@ export default function ResponsiveDialog({ setOpen, open, item }) {
           >
             <Box>
               <Box
-                maxWidth={400}
+                maxWidth={width_800 ? "100%" : "400px"}
                 sx={{
+                  textAlign: "center",
                   ".fexx": {
                     display: "inline-block",
                     img: { width: "100%" },
@@ -134,7 +139,7 @@ export default function ResponsiveDialog({ setOpen, open, item }) {
                 }}
               >
                 <Swiper
-                  style={{ padding: "0 0 60px" }}
+                  style={{ padding: "0 0 60px"  }}
                   modules={[Navigation, Pagination, Scrollbar, A11y]}
                   slidesPerView={1}
                   loop
@@ -146,7 +151,7 @@ export default function ResponsiveDialog({ setOpen, open, item }) {
                         '<span class="fexx ' +
                         className +
                         '">' +
-                        ` <img src=${item.images[index]} alt="ppppp" />` +
+                        ` <img src=${item.images[index]} alt="img" />` +
                         "</span>"
                       );
                     },
@@ -154,7 +159,7 @@ export default function ResponsiveDialog({ setOpen, open, item }) {
                 >
                   {item.images?.map((img) => (
                     <SwiperSlide key={img}>
-                      <img width={"350"} src={img} alt="ppppp" />
+                      <img width={"350" } style={{margin:"0 8px"}} src={img} alt="img" />
                     </SwiperSlide>
                   ))}
                 </Swiper>
@@ -188,17 +193,14 @@ export default function ResponsiveDialog({ setOpen, open, item }) {
                   <Typography
                     variant="h6"
                     component="div"
-                    // sx={{ fontWeight: "bold" }}
+                   
                   >
                     quantity : {item?.quantity}
                   </Typography>
                   <Typography variant="h6" component="div" py={1}>
                     brand : {item.brand?.name}
                   </Typography>
-                  <Rating
-                    readOnly
-                    defaultValue={item?.ratingsAverage}
-                  />
+                  <Rating readOnly defaultValue={item?.ratingsAverage} />
 
                   <IconButton
                     sx={{ ml: 4, mb: 2 }}
@@ -206,7 +208,6 @@ export default function ResponsiveDialog({ setOpen, open, item }) {
                     className="icon Favorite"
                     aria-label="Favorite"
                     onClick={() =>
-                      
                       Wishlist__({
                         id: item.id,
                         remove: Wishlist_list_data.data?.find(
@@ -252,58 +253,31 @@ export default function ResponsiveDialog({ setOpen, open, item }) {
                       </IconButton>
                       <p>{cart_product.count}</p>
                       <IconButton
-                     
                         onClick={() => {
                           let count = cart_product.count - 1;
                           Update_quantity(cart_product.product.id, count);
                         }}
-                      
                         aria-label="close"
                         sx={{
                           border: `1px solid ${theme.palette.red_main.main} `,
-                      
                         }}
                       >
                         <HorizontalRuleIcon fontSize="inherit" />
+                        
                       </IconButton>
                     </Stack>
                   ) : (
-                    <Button
-                      onClick={() => {
-                        if (Data_Person.message !== "success") {
-                          Redux_fun(Open_Dialog_test());
-
-                          return;
-                        }
-                        add_item(item.id);
-                      }}
-                      sx={{
-                        width: "90%",
-                        py: 1,
-                        mx: "auto",
-                        color: theme.palette.text.primary,
-                        fontWeight: "bold",
-                        transition: "0.5s",
-                        border: "1px solid #777",
-                        textTransform: "capitalize",
-                        fontSize: "18px",
-
-                        "&:hover": {
-                          bgcolor: "#1f2937",
-                          color: "white",
-                        },
-                      }}
-                      size="large"
-                    >
-                      Add to Cart
-                    </Button>
+                    <Add_Button item={item} />
                   )}
                 </CardActions>
 
                 <IconButton
                   onClick={handleClose}
                   sx={{
+                    zIndex: 9999,
+                    bgcolor:`${width_450?"#999":""}`,
                     display: "inline-flex",
+
                     "&:hover ": {
                       transform: " rotate(180deg)",
                       color: "red",

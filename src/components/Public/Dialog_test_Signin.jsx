@@ -31,7 +31,7 @@ export default function Dialog_test_signIn() {
   return (
     <>
       <Dialog
-        fullScreen={fullScreen}
+        // fullScreen={fullScreen}
         maxWidth={"xs"}
         fullWidth={true}
         open={open_test}
@@ -39,7 +39,7 @@ export default function Dialog_test_signIn() {
         aria-labelledby="responsive-dialog-title"
       >
         <DialogContent>
-          <Typography p={2} component={"p"} variant="h6">
+          <Typography py={2} component={"h2"} variant={`${fullScreen?"body1":"h6"}`} >
             Access restricted. Please log in first.
           </Typography>
 

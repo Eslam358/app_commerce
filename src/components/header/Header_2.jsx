@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+// @ts-nocheck
+/* eslint-disable react/prop-types */
+import React, { useState, useEffect } from "react";
 import Person3Icon from "@mui/icons-material/Person3";
 import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
 import Badge from "@mui/material/Badge";
@@ -19,6 +21,7 @@ import {
 } from "@mui/material";
 // import LoadingButton from "@mui/lab/LoadingButton";
 import SearchIcon from "@mui/icons-material/Search";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import { useSelector, useDispatch } from "react-redux";
 import { handleClickOpen } from "../../reduxtoolkit/slice/global/DialogSign";
@@ -29,6 +32,7 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useNavigate } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import Drawer_wishlist from "../Public/Drawer_wishlist";
 
 //search
 const Search = styled("div")(({ theme }) => ({
@@ -36,7 +40,7 @@ const Search = styled("div")(({ theme }) => ({
   flexGrow: ".8",
   p: "0",
   border: "1px solid #777",
-  ".MuiList-root.MuiList-padding": { padding: "0px !important"},
+  ".MuiList-root.MuiList-padding": { padding: "0px !important" },
 
   borderRadius: "20px",
 
@@ -64,10 +68,12 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 }));
 
 const Header2 = () => {
-  const [Drawer_open, setDrawer_open] = useState(false);
 
-  const toggleDrawer = (newDrawer_open) => () => {
- 
+  const [Drawer_open, setDrawer_open] = (useState(false)) ;
+  const [drawer_wish_open, setDrawer_wish_open] = (useState(false)) ;
+
+
+  const toggleDrawer = (newDrawer_open) => {
     if (location.pathname === "/ViewCart") {
       setDrawer_open(false);
       return;
@@ -75,14 +81,15 @@ const Header2 = () => {
     setDrawer_open(newDrawer_open);
   };
 
-  // @ts-ignore
+
   const Data_Person = useSelector((dat) => dat.Data_Person);
-  // @ts-ignore
+
   const cart_list = useSelector((dat) => dat.cart_items);
+
+  const Wishlist_list_data = useSelector((dat) => dat.Wishlist_list);
 
   const theme = useTheme();
   const matches_sm = useMediaQuery(theme.breakpoints.down("sm"));
-  // const matches_sm = useMediaQuery(theme.breakpoints.down("md"));
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const open = Boolean(anchorEl);
@@ -93,7 +100,6 @@ const Header2 = () => {
   const handleMenuItemClick = (event, index, option) => {
     setSelectedIndex(index);
     setAnchorEl(null);
-    console.log(option);
     if (option._id !== "") {
       fetchProducts(option._id);
     } else {
@@ -115,22 +121,22 @@ const Header2 = () => {
   // @ts-ignore
   const [, setIsLoading] = useState(false);
 
-  // دالة لجلب المنتجات من الـ API
+
   const fetchProducts = async (category) => {
     category = category ? `?category=${category}` : "";
 
     try {
       const response = await fetch(
         `https://ecommerce.routemisr.com/api/v1/products${category}`
-      ); // هنا يتم تحديد الصفحة والعدد لكل صفحة
+      ); 
       const data = await response.json();
 
       if (data.data.length > 0) {
-        setProducts(data.data); // إضافة المنتجات الجديدة إلى القائمة
+        setProducts(data.data); 
         setTest_Products(data.data);
       }
     } catch (error) {
-      console.error("حدث خطأ أثناء جلب المنتجات:", error);
+      console.error("error", error);
     }
 
     setIsLoading(false);
@@ -154,242 +160,253 @@ const Header2 = () => {
   // -------------------------------------------------
   return (
     <>
-        <Container
-          maxWidth="xl"
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-       
-          {!open_search && (
-            <IconButton onClick={() => navigate("/")}>
-              {theme.palette.mode === "light" ? (
-                <img
-                  width={`${matches_sm ?"70%":"100%"}`}
-                  src="./assets/logo/logo2.b6e97da2.svg"
-                  alt="logo"
+      <Container
+        maxWidth="xl"
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        {!open_search && (
+          <IconButton onClick={() => navigate("/")}>
+            {theme.palette.mode === "light" ? (
+              <img
+                width={`${matches_sm ? "70%" : "100%"}`}
+                src="./assets/logo/logo2.b6e97da2.svg"
+                alt="logo"
+              />
+            ) : (
+              <img
+                width={`${matches_sm ? "70%" : "100%"}`}
+                src="./assets/All_img/logo.svg"
+                alt="logo"
+              />
+            )}
+          </IconButton>
+        )}
+
+        {!matches_sm || open_search ? (
+          <Search>
+            <Stack justifyContent={"space-between"} direction={"row"}>
+              <Stack sx={{ justifyContent: "center", flexGrow: "1" }}>
+                {!matches_sm && (
+                  <SearchIconWrapper>
+                    <SearchIcon />
+                  </SearchIconWrapper>
+                )}
+
+                <Autocomplete
+                  freeSolo
+                  id="country-select-demo"
+                  sx={{
+                    width: "90%",
+                    outline: "none",
+                    ".MuiInputBase-root.MuiOutlinedInput-root": {
+                      padding: `0`,
+                    },
+                  }}
+                  options={products_fil}
+                  onInputChange={handleInputChange}
+                  getOptionLabel={(option) => option.title}
+                  renderOption={(props, option) => {
+                    // eslint-disable-next-line no-unused-vars
+                    const { key, ...optionProps } = props;
+                    return (
+                      <Box
+                        key={option.id}
+                        component="li"
+                        sx={{
+                          "& > img": { mr: 2, flexShrink: 0 },
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                        }}
+                        {...optionProps}
+                      >
+                        <Box
+                          onClick={() => handleInputChangemm(option)}
+                          sx={{ display: "flex", gap: "15px" }}
+                        >
+                          <img
+                            loading="lazy"
+                            width="25"
+                            srcSet={option.imageCover}
+                            src={option.imageCover}
+                            alt="imageCover"
+                          />
+                          <p>{option.title}</p>
+                        </Box>
+                      </Box>
+                    );
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      sx={{
+                        ".MuiOutlinedInput-notchedOutline": { all: "unset" },
+
+                        "input.MuiInputBase-input ": {
+                          p: "0px 11px !important",
+                        },
+
+                        ml: `${matches_sm ? "10px" : "40px"}`,
+                      }}
+                      {...params}
+                      placeholder="Search…"
+                      slotProps={{
+                        htmlInput: {
+                          ...params.inputProps,
+                          autoComplete: "new-password", // disable autocomplete and autofill
+                        },
+                      }}
+                    />
+                  )}
                 />
+              </Stack>
+              <div>
+                <List
+                  component="nav"
+                  aria-label="Device settings"
+                  sx={{
+                    // @ts-ignore
+                    bgcolor: theme.palette.bg_main.primary,
+                    width: `${matches_sm ? "70px" : "150px"}`,
+                    padding: "5px",
+                    borderBottomRightRadius: "20px",
+                    borderTopRightRadius: "20px",
+                    px: "0px",
+                    ".css-10zu4gy-MuiListItem-root": {
+                      p: `${matches_sm ? "0px" : "5px"}`,
+                    },
+                  }}
+                >
+                  <ListItem
+                    id="lock-button"
+                    aria-haspopup="listbox"
+                    aria-controls="lock-menu"
+                    aria-label="when device is locked"
+                    aria-expanded={open ? "true" : undefined}
+                    onClick={handleClickListItem}
+                    sx={{ cursor: "pointer", textAlign: "end" }}
+                  >
+                    <ListItemText
+                      primary={options[selectedIndex]?.name.split(" ")[0]}
+                    />
+
+                    <KeyboardArrowDown />
+                  </ListItem>
+                </List>
+                <Menu
+                  id="lock-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    "aria-labelledby": "lock-button",
+                    role: "listbox",
+                  }}
+                >
+                  {options.map((option, index) => (
+                    <MenuItem
+                      key={index}
+                      selected={index === selectedIndex}
+                      onClick={(event) =>
+                        handleMenuItemClick(event, index, option)
+                      }
+                    >
+                      {option.name}
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </div>
+            </Stack>
+          </Search>
+        ) : (
+          <Box flexGrow={1} />
+        )}
+
+        <Stack justifyContent={"end"} direction={"row"}>
+          {matches_sm && (
+            <IconButton
+              onClick={() => setOpen_search(!open_search)}
+              size="small"
+            >
+              {!open_search ? (
+                <SearchIcon />
               ) : (
-                <img
-                  width={`${matches_sm ?"70%":"100%"}`}
-                  src="./assets/All_img/logo.svg"
-                  alt="logo"
+                <Close
+                  fontSize="inherit"
+                  sx={{ "&:hover": { color: "red" } }}
                 />
               )}
             </IconButton>
           )}
-
-          {!matches_sm || open_search ? (
-            <Search>
-              <Stack justifyContent={"space-between"} direction={"row"}>
-                <Stack sx={{ justifyContent: "center", flexGrow: "1" }}>
-                  {!matches_sm && (
-                    <SearchIconWrapper>
-                      <SearchIcon />
-                    </SearchIconWrapper>
-                  )}
-
-                  <Autocomplete
-                    freeSolo
-                    id="country-select-demo"
-                    sx={{
-                      width: "90%",
-                      outline: "none",
-                      ".MuiInputBase-root.MuiOutlinedInput-root": {
-                        padding: `0`,
-                      },
-                    }}
-                    options={products_fil}
-                    onInputChange={handleInputChange}
-                    getOptionLabel={(option) => option.title}
-                    renderOption={(props, option) => {
-                      const { key, ...optionProps } = props;
-                      return (
-                        <Box
-                          key={option.id}
-                          component="li"
-                          sx={{
-                            "& > img": { mr: 2, flexShrink: 0 },
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                          }}
-                          {...optionProps}
-                        >
-                          <Box
-                            onClick={() => handleInputChangemm(option)}
-                            sx={{ display: "flex", gap: "15px" }}
-                          >
-                            <img
-                              loading="lazy"
-                              width="25"
-                              srcSet={option.imageCover}
-                              src={option.imageCover}
-                              alt="imageCover"
-                            />
-                            <p>{option.title}</p>
-                          </Box>
-                        </Box>
-                      );
-                    }}
-                    renderInput={(params) => (
-                      <TextField
-                        sx={{
-                          ".MuiOutlinedInput-notchedOutline": { all: "unset"},
-                         
-                          "input.MuiInputBase-input ": { p: "0px 11px !important"},
-
-                          ml: `${matches_sm ? "10px" : "40px"}`,
-                       
-                        }}
-                        {...params}
-                        placeholder="Search…"
-                        slotProps={{
-                          htmlInput: {
-                            ...params.inputProps,
-                            autoComplete: "new-password", // disable autocomplete and autofill
-                          },
-                        }}
-                      />
-                    )}
-                  />
-                </Stack>
-                <div>
-                  <List
-                    component="nav"
-                    aria-label="Device settings"
-                    sx={{
-                      // @ts-ignore
-                      bgcolor: theme.palette.bg_main.primary,
-                      width: `${matches_sm ? "70px" : "150px"}`,
-                      padding: "5px",
-                      borderBottomRightRadius: "20px",
-                      borderTopRightRadius: "20px",
-                      px: "0px",
-                      ".css-10zu4gy-MuiListItem-root": {
-                        p: `${matches_sm ? "0px" : "5px"}`,
-                      },
-                    }}
-                  >
-                    <ListItem
-                      id="lock-button"
-                      aria-haspopup="listbox"
-                      aria-controls="lock-menu"
-                      aria-label="when device is locked"
-                      aria-expanded={open ? "true" : undefined}
-                      onClick={handleClickListItem}
-                      sx={{ cursor: "pointer", textAlign: "end" }}
-                    >
-                      <ListItemText
-                        primary={options[selectedIndex]?.name.split(" ")[0]}
-                      />
-
-                      <KeyboardArrowDown />
-                    </ListItem>
-                  </List>
-                  <Menu
-                    id="lock-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                      "aria-labelledby": "lock-button",
-                      role: "listbox",
-                    }}
-                  >
-                    {options.map((option, index) => (
-                      <MenuItem
-                        key={index}
-                        selected={index === selectedIndex}
-                        onClick={(event) =>
-                          handleMenuItemClick(event, index, option)
-                        }
-                      >
-                        {option.name}
-                      </MenuItem>
-                    ))}
-                  </Menu>
-                </div>
-              </Stack>
-            </Search>
-          ) : (
-            <Box flexGrow={1} />
+          {!open_search && (
+            <Box sx={{ position: "relative" }}>
+              <IconButton
+                onClick={() => fun_redux(handleClickOpen())}
+                className="fex"
+              >
+                <Person3Icon />
+              </IconButton>
+              <Typography
+                sx={{
+                  position: "absolute",
+                  fontSize: "11px",
+                  left: "-30%",
+                  bottom: "-5px",
+                  width: "60px",
+                  textAlign: "center",
+                  overflow: "hidden",
+                }}
+              >
+                {Data_Person.message === "success" &&
+                  Data_Person.user.name.split(" ")[0]}
+              </Typography>
+            </Box>
           )}
 
-          <Stack justifyContent={"end"} direction={"row"}>
-            {matches_sm && (
-              <IconButton
-                onClick={() => setOpen_search(!open_search)}
-                size="small"
+          {!open_search && (
+            <IconButton onClick={() => toggleDrawer(true)}>
+              <Badge
+                badgeContent={cart_list.data.products?.length}
+                sx={{
+                  span: {
+                    // @ts-ignore
+                    bgcolor: `${theme.palette.red_main.main}`,
+                    color: "white",
+                    top: "-5px",
+                    right: "-5px",
+                  },
+                }}
               >
-                {!open_search ? (
-                  <SearchIcon />
-                ) : (
-                  <Close
-                    fontSize="inherit"
-                    sx={{ "&:hover": { color: "red" } }}
-                  />
-                )}
-              </IconButton>
-            )}
-            {!open_search && (
-              <Box sx={{ position: "relative" }}>
-                <IconButton
-                  onClick={() => fun_redux(handleClickOpen())}
-                  className="fex"
-                >
-                  <Person3Icon />
-                </IconButton>
-                <Typography
-                  sx={{
-                    position: "absolute",
-                    fontSize: "11px",
-                    left: "-30%",
-                    bottom: "-5px",
-                    width: "60px",
-                    textAlign: "center",
-                    overflow: "hidden",
-                  }}
-                >
-                  {Data_Person.message === "success" &&
-                    Data_Person.user.name.split(" ")[0]}
-                </Typography>
-              </Box>
-            )}
-
-            {!open_search && (
-              <IconButton onClick={toggleDrawer(true)}>
-                <Badge
-                  badgeContent={cart_list.data.products?.length}
-                  sx={{
-                    span: {
-                      // @ts-ignore
-                      bgcolor: `${theme.palette.red_main.main}`,
-                      color: "white",
-                      top: "-5px",
-                      right: "-5px",
-                    },
-                  }}
-                >
-                  <LocalGroceryStoreIcon color="action" />
-                </Badge>
-              </IconButton>
-            )}
-          </Stack>
-          <Cart_Drawer
-            toggleDrawer={toggleDrawer}
-            Drawer_open={Drawer_open}
-            // @ts-ignore
-            data={cart_list.data.products}
-          />
-        </Container>
-   
+                <LocalGroceryStoreIcon color="action" />
+              </Badge>
+            </IconButton>
+          )}
+          {!open_search && (
+            <IconButton
+              onClick={() => setDrawer_wish_open(true)}
+              disabled={
+                location.pathname === "/Categories/Wishlist" ? true : false
+              }
+            >
+              <FavoriteIcon
+                color={Wishlist_list_data.data.length ? "error" : ""}
+              />
+            </IconButton>
+          )}
+        </Stack>
+        <Cart_Drawer toggleDrawer={toggleDrawer} Drawer_open={Drawer_open} />
+        <Drawer_wishlist
+          toggleDrawer={setDrawer_wish_open}
+          Drawer_open={drawer_wish_open}
+        />
+      </Container>
     </>
   );
 };
 
-export default Header2;
+export default React.memo(Header2);
 
 const options = [
   {

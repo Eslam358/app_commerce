@@ -28,30 +28,25 @@ import { useSelector, useDispatch } from "react-redux";
 import { wishlist } from "../reduxtoolkit/slice/Wishlist/Wishlist";
 import { wishlist_list } from "../reduxtoolkit/slice/Wishlist/Wishlist_list";
 import { cart_Update_quantity } from "../reduxtoolkit/slice/Cart/Update_quantity";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
-  useParams,
   useLocation,
-  useNavigate,
-  useMatch,
+
 } from "react-router-dom";
-import { refresh_cart } from "../reduxtoolkit/slice/Cart/Items_Cart";
 
 import { cart_add_item } from "../reduxtoolkit/slice/Cart/Add_Item";
-import { cart_items } from "../reduxtoolkit/slice/Cart/Items_Cart";
+import { cart_items, Remove_cart, Update_cart } from "../reduxtoolkit/slice/Cart/Items_Cart";
 
 export default function Item() {
-  const Params = useParams() || "";
   const Location = useLocation();
-  const Navigate = useNavigate();
 
   const item = Location.state.item || [];
 
 
   const theme = useTheme();
+  // @ts-ignore
   const cart_list = useSelector((dat) => dat.cart_items);
 
-  const Update_quantity_ = useSelector((dat) => dat.Update_quantity);
 
   const cart_product = cart_list.data?.products?.find(
     (a) => a.product.id === item.id
@@ -63,10 +58,17 @@ export default function Item() {
   const Wishlist_list_data = useSelector((dat) => dat.Wishlist_list);
   const Redux_fun = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [loading_Add, setLoading_Add] = useState(false);
 
   const Update_quantity = (id, count) => {
       // @ts-ignore
     Redux_fun(cart_Update_quantity({ id, count }));
+    if (count === 0) {
+      Redux_fun(Remove_cart(id));
+      return;
+    }
+    Redux_fun(Update_cart({ id, count }));
+
   };
   const Wishlist__ = async (data) => {
     setLoading(true);
@@ -78,19 +80,15 @@ export default function Item() {
   };
 
   const add_item = async (data) => {
+    setLoading_Add(true);
     // @ts-ignore
     await Redux_fun(cart_add_item(data));
     // @ts-ignore
-    await Redux_fun(cart_items());
+   await Redux_fun(cart_items());
+    setLoading_Add(false);
   };
 
-  useEffect(() => {
-    //Update_quantity_.data.data.products);
 
-    if (Update_quantity_.data?.products && !Update_quantity_.loading) {
-      Redux_fun(refresh_cart(Update_quantity_));
-    }
-  }, [Update_quantity_.data]);
 
   return (
   
@@ -215,6 +213,7 @@ export default function Item() {
                 sx={{
                   fontWeight: "bold",
                   py: 1,
+                  // @ts-ignore
                   color: theme.palette.red_main.main,
                 }}
               >
@@ -260,8 +259,8 @@ export default function Item() {
                 >
                   <IconButton
                     sx={{
+                      // @ts-ignore
                       border: `1px solid ${theme.palette.red_main.main} `,
-                      //  fontSize: "14px",
                     }}
                     onClick={() => {
                       let count = cart_product?.count + 1;
@@ -274,16 +273,14 @@ export default function Item() {
                   </IconButton>
                   <p>{cart_product.count}</p>
                   <IconButton
-                    //  disabled={cart_product?.count === 1}
                     onClick={() => {
                       let count = cart_product.count - 1;
                       Update_quantity(cart_product.product.id, count);
                     }}
-                    //  size="small"
                     aria-label="close"
                     sx={{
+                      // @ts-ignore
                       border: `1px solid ${theme.palette.red_main.main} `,
-                      //  fontSize: "14px",
                     }}
                   >
                     <HorizontalRuleIcon fontSize="inherit" />
@@ -296,6 +293,7 @@ export default function Item() {
                     width: "90%",
                     py: 1,
                     mx: "auto",
+                    // @ts-ignore
                     color: theme.palette.text.button,
                     fontWeight: "bold",
                     transition: "0.5s",
@@ -310,7 +308,10 @@ export default function Item() {
                   }}
                   size="large"
                 >
-                  Add to Cart
+                     {loading_Add  ? "loading..." : " Add to Car"}
+        {loading_Add  && (
+          <CircularProgress sx={{ position: "absolute" }} size={25} />
+        )}
                 </Button>
               )}
             </CardActions>

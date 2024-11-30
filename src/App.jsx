@@ -47,18 +47,19 @@ function App() {
   useEffect(() => {
      // @ts-ignore
     dispatch(Categories_items());
-    const AA = async () => {
+   (async () => {
       // @ts-ignore
       await dispatch(Data_Person_fun_local());
       if (Data_Person.message === "success") {
         // @ts-ignore
+        
         dispatch(wishlist_list());
         // @ts-ignore
         dispatch(cart_items());
        
       }
-    };
-    AA()
+    })()
+    
   }, [Data_Person.message, dispatch]);
 
   return (

@@ -1,41 +1,39 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Cookies_person } from "../global/Data_Person";
+import Cookies from "js-cookie";
 
 // ---------------------------------------------------------
- const postData_wishlist = async (data) => {
+const postData_wishlist = async (data) => {
+  const data_Cookies_person = Cookies.get("Data_person");
+  const Cookies_person = data_Cookies_person
+    ? JSON.parse(data_Cookies_person)
+    : "";
 
-
-  
-     if (data.remove) {
-      true
-      const response = await axios.delete(
-        `https://ecommerce.routemisr.com/api/v1/wishlist/${data.id}`, // رابط API
-        {
-          headers: {
-            token: Cookies_person.token || "",
-          },
-        }
-      );
-      return response.data;
-     } else {
-      const response = await axios.post(
-        `https://ecommerce.routemisr.com/api/v1/wishlist`, // رابط API
-        {
-          productId: data.id,
+  if (data.remove) {
+    true;
+    const response = await axios.delete(
+      `https://ecommerce.routemisr.com/api/v1/wishlist/${data.id}`, // رابط API
+      {
+        headers: {
+          token: Cookies_person.token || "",
         },
-        {
-          headers: {
-            token: Cookies_person.token || "",
-          },
-        }
-      );
-      return response.data;
-     }
-
-
-
-
+      }
+    );
+    return response.data;
+  } else {
+    const response = await axios.post(
+      `https://ecommerce.routemisr.com/api/v1/wishlist`, // رابط API
+      {
+        productId: data.id,
+      },
+      {
+        headers: {
+          token: Cookies_person.token || "",
+        },
+      }
+    );
+    return response.data;
+  }
 };
 // ---------------------------------------------------------
 // --------------------createAsyncThunk-------------------------------------
@@ -45,12 +43,9 @@ export const wishlist = createAsyncThunk("wishlist", async (Data, thunkAPI) => {
   try {
     const response = await postData_wishlist(Data);
 
-    
-
     return response; // إرجاع البيانات إذا نجح الطلب
   } catch (error) {
-  console.error(error)
- 
+    console.error(error);
 
     return thunkAPI.rejectWithValue(error.response.data); // إرجاع الخطأ إذا فشل الطلب
   }

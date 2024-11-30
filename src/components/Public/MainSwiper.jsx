@@ -2,7 +2,6 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import { Box, IconButton, Rating } from "@mui/material";
@@ -30,11 +29,10 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { wishlist } from "../../reduxtoolkit/slice/Wishlist/Wishlist";
 import { wishlist_list } from "../../reduxtoolkit/slice/Wishlist/Wishlist_list";
-import { cart_add_item } from "../../reduxtoolkit/slice/Cart/Add_Item";
-import { cart_items } from "../../reduxtoolkit/slice/Cart/Items_Cart";
 import { useNavigate } from "react-router-dom";
 
 import { Open_Dialog_test } from "../../reduxtoolkit/slice/global/Dialog_test_sigin";
+import Add_Button from "../../components/Button/Add_Button";
 
 // eslint-disable-next-line react/prop-types
 function MainSwiper({ Arr, num }) {
@@ -43,7 +41,6 @@ function MainSwiper({ Arr, num }) {
   const Data_Person = useSelector((dat) => dat.Data_Person);
   // @ts-ignore
   const Cart_list = useSelector((dat) => dat.cart_items);
-  const cart_add_item_data = useSelector((dat) => dat.cart_add_item);
   // @ts-ignore
   const Wishlist_list_data = useSelector((dat) => dat.Wishlist_list);
   const Redux_fun = useDispatch();
@@ -57,12 +54,7 @@ function MainSwiper({ Arr, num }) {
     await Redux_fun(wishlist_list());
     setLoading(false);
   };
-  const add_item = async (data) => {
-    // @ts-ignore
-    await Redux_fun(cart_add_item(data));
-    // @ts-ignore
-    await Redux_fun(cart_items());
-  };
+
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
   const matches_md = useMediaQuery(theme.breakpoints.up("md"));
@@ -70,7 +62,6 @@ function MainSwiper({ Arr, num }) {
   num = matches_lg ? num : matches_md ? 3 : matches ? 2 : 1;
 
   const [open, setOpen] = useState(false);
-  const [loading_item, setloading_item] = useState("");
   const [item, setItem] = useState([]);
   const handleClickOpen = (item) => {
     setOpen(true);
@@ -101,8 +92,7 @@ function MainSwiper({ Arr, num }) {
           slidesPerView={num}
           navigation
           loop
-          // slidesPerGroup={num}
-          // loopedSlides={num - 1}
+       
         >
           {[...Arr].length > 0 ? (
             <>
@@ -212,46 +202,8 @@ function MainSwiper({ Arr, num }) {
                       </Box>
                     </CardContent>
                     <CardActions>
-                      <Button
-                        onClick={(e) => {
-                          e.stopPropagation();
-
-                          if (Data_Person.message !== "success") {
-                            Redux_fun(Open_Dialog_test());
-
-                            return;
-                          }
-                          add_item(item.id);
-                          setloading_item(item.id);
-                        }}
-                        sx={{
-                          width: "90%",
-
-                          mx: "auto",
-                          color: theme.palette.text.button,
-                          fontWeight: "bold",
-                          transition: "0.5s",
-                          border: "1px solid #777",
-                          textTransform: "capitalize",
-
-                          "&:hover": {
-                            bgcolor: "#1f2937",
-                            color: "white",
-                          },
-                        }}
-                        size="medium"
-                      >
-                       {((cart_add_item_data.loading || Cart_list.loading) && loading_item === item.id) ? "loading...":" Add to Car"}
-                        {((cart_add_item_data.loading || Cart_list.loading) && loading_item === item.id) && (
-                       
-                          <CircularProgress
-                         sx={{ position: "absolute"}}
-                            size={25}
-                          />
-                     
-                          
-                        )}
-                      </Button>
+                 
+                      <Add_Button item={item}/>
                     </CardActions>
                     <IconButton
                       onClick={(e) => {
@@ -286,19 +238,44 @@ function MainSwiper({ Arr, num }) {
                         });
                       }}
                     >
-                      {Wishlist_list_data.data?.find(
+{!loading  ?
+                      (Wishlist_list_data.data?.find(
                         (a) => a.id === item.id
                       ) ? (
                         <FavoriteIcon color={"error"} fontSize="inherit" />
                       ) : (
                         <FavoriteBorderOutlinedIcon fontSize="inherit" />
-                      )}
-                      {loading && (
-                        <CircularProgress
-                          sx={{ position: "absolute" }}
-                          size={18}
-                        />
-                      )}
+                      ))
+:
+
+                 (!Wishlist_list_data.data?.find(
+                    (a) => a.id === item.id
+                  ) ? (
+                    <>
+                    <FavoriteIcon color={"error"} fontSize="inherit" />
+                    <CircularProgress
+                    sx={{ position: "absolute" }}
+                    size={18}
+                  />
+                  </>
+                    
+                  ) : (
+                    <>
+                    <FavoriteBorderOutlinedIcon fontSize="inherit" />
+                    <CircularProgress
+                    sx={{ position: "absolute" }}
+                    size={18}
+                  />
+                  </>
+
+                  ))}
+
+
+
+
+
+                     
+                    
                     </IconButton>
                   </Card>
                 </SwiperSlide>
